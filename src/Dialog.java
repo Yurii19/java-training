@@ -1,11 +1,16 @@
 import java.util.Scanner;
 
 public class Dialog {
-    static void askUser(){
+    static void askUser() {
         System.out.println("Input a value and press 'enter' ");
         Scanner sc = new Scanner(System.in);
-      //  System.out.println("Input a value");
-        System.out.println("You inputted: "+sc.nextLine());
+        try {
+            int bill = Integer.parseInt(sc.nextLine());
+            System.out.println("You inputted: " + bill);
+        } catch (Exception e) {
+            System.err.println(e + ": You might have inputted wrong value.");
+        }
+
 
     }
 }
