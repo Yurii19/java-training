@@ -3,16 +3,17 @@ import java.util.*;
 
 public class Store {
 
-    static Bill oneUah = new Bill(1, 0);
-    static Bill twoUah = new Bill(2, 0);
-    static Bill fiveUah = new Bill(5, 0);
-    static Bill tenUah = new Bill(10, 2);
-    static Bill twentyUah = new Bill(20, 0);
-    static Bill hundredUah = new Bill(100, 10);
-    static Bill[] Bills = new Bill[]{oneUah, twoUah, fiveUah, tenUah, twentyUah, hundredUah};
-
     static ArrayList<String> operationsLog = new ArrayList<String>();
     static int strategy = 1;
+
+    static LinkedHashMap<Integer, Integer> billsBox = new LinkedHashMap<Integer, Integer>() {{
+        put(1, 0);
+        put(2, 0);
+        put(5, 0);
+        put(10, 10);
+        put(20, 0);
+        put(100, 3);
+    }};
 
     /**
      * @param entry string which describe operation with bills in the ATM
@@ -26,29 +27,28 @@ public class Store {
      * @param amount - amount of money which user wish to withdraw
      */
     public static void giveMoney2(int amount) {
-        Bill[] BillsCopy = new Bill[Bills.length];
-        for (int i = 0; i < Bills.length; i++) {
-            BillsCopy[i] = new Bill(Bills[i].Nominal, Bills[i].Amount);
-        }
-
+        LinkedHashMap<Integer, Integer> billsBoxCopy = new LinkedHashMap<Integer, Integer>(billsBox);
         int change = amount;
+        System.out.println("give Money 2");
         boolean stopper = true;
         while (stopper) {
             int copyOfChange = change;
-            for (int i = 5; i >= 0; i--) {
-                Bill theBill = BillsCopy[i];
-                if (change >= theBill.Nominal && theBill.Amount != 0) {
-                    change = change - theBill.Nominal;
-                    theBill.Amount -= 1;
+
+            for (Map.Entry<Integer, Integer> entry : billsBoxCopy.entrySet()) {
+                int nominal = entry.getKey();
+                int billsAtATM = entry.getValue();
+                if (change > nominal) {
+                    change = change - nominal;
+                    billsBoxCopy.put(nominal, (entry.getValue() - 1));
                 }
-            }
+            }//end of for loop
             if (change == 0) {
-                String localReport = makeGiveReport(Bills, BillsCopy);
-                System.out.println(localReport);
-                Bills = BillsCopy;
+                System.out.println(makeGiveReport(billsBox, billsBoxCopy));
+                billsBox = billsBoxCopy;
                 stopper = false;
-                addToLog(" Given " + amount + " UAH to a user");
-            } else if (copyOfChange == change) {
+                addToLog(" Were given " + amount + " UAH");
+            }
+            if (change == copyOfChange) {
                 stopper = false;
                 System.out.println("There are no enough Bills !");
             }
@@ -59,77 +59,63 @@ public class Store {
      * @param amount - amount of money which user wish to withdraw
      */
     public static void giveMoney(int amount) {
-        Bill[] BillsCopy = new Bill[Bills.length];
-        for (int i = 0; i < Bills.length; i++) {
-            BillsCopy[i] = new Bill(Bills[i].Nominal, Bills[i].Amount);
-        }
+        LinkedHashMap<Integer, Integer> billsBoxCopy = new LinkedHashMap<Integer, Integer>(billsBox);
         int change = amount;
-        for (int i = 5; i >= 0; i--) {
-            Bill theBill = BillsCopy[i];
-            int amountOfTheBills = change / theBill.Nominal;
-            if (change >= theBill.Nominal && theBill.Amount != 0) {
-                if (amountOfTheBills > theBill.Amount) {
-                    change = change - theBill.Nominal * theBill.Amount;
-                    theBill.Amount = 0;
-                } else {
-                    change = change - theBill.Nominal * amountOfTheBills;
-                    theBill.Amount -= amountOfTheBills;
-                }
-            } else if (theBill.Amount != 0) {
-                change = change - theBill.Nominal * amountOfTheBills;
-                theBill.Amount -= amountOfTheBills;
+
+        List<Integer> nominalKeys = new ArrayList(billsBox.keySet());
+        Collections.reverse(nominalKeys);
+
+        for (Integer nominal : nominalKeys) {
+            int billsAtATM = billsBoxCopy.get(nominal);
+            int amountRequiredBills = change / nominal;
+            boolean isEnoughBillsAtATM = amountRequiredBills <= billsAtATM;
+            if (billsAtATM == 0) {
+                continue;
+            } else if (isEnoughBillsAtATM) {
+                change = change - nominal * amountRequiredBills;
+                billsBoxCopy.put(nominal, (billsAtATM - amountRequiredBills));
+
+            } else if (!isEnoughBillsAtATM) {
+                change = change - nominal * billsAtATM;
+                billsBoxCopy.put(nominal, 0);
             }
         }
         if (change == 0) {
-            String localReport = makeGiveReport(Bills, BillsCopy);
-            System.out.println(localReport);
-            Bills = BillsCopy;
-            addToLog(" Given " + amount + " UAH to a user");
+            System.out.println(makeGiveReport(billsBox, billsBoxCopy));
+            billsBox = billsBoxCopy;
+            addToLog(" Were given " + amount + " UAH");
         } else {
             System.out.println("There are no enough Bills !");
         }
     }
 
     /**
-     * @param srcArray array contains information about different ATM bills before operation
-     * @param newArray array contains information about different ATM bills after operation
+     * @param billsBoxBefore array contains information about different ATM bills before operation
+     * @param billsBoxAfter  newArray array contains information about different ATM bills after operation
      * @return string the contains information about how much and what nominal where given
      */
-    private static String makeGiveReport(Bill[] srcArray, Bill[] newArray) {
+    private static String makeGiveReport(LinkedHashMap<Integer, Integer> billsBoxBefore, LinkedHashMap<Integer, Integer> billsBoxAfter) {
         StringBuilder report = new StringBuilder("");
-        for (int i = 0; i < srcArray.length; i++) {
-            int diff = srcArray[i].Amount - newArray[i].Amount;
+        billsBoxBefore.entrySet().forEach(el -> {
+            int diff = el.getValue() - billsBoxAfter.get(el.getKey());
             if (diff > 0) {
-                String logRow = " " + diff + " bills of " + srcArray[i].Nominal + ";";
+                String logRow = " " + diff + " bills of " + el.getKey() + ";";
                 report.append(logRow);
             }
-        }
+        });
         return "Were given: " + report.toString();
     }
 
-    /**
-     * @return the value which show if there is bills in the ATM
-     */
     public static boolean checkBills() {
-        boolean thereIsMoney = false;
-        for (Bill bill : Bills) {
-            if (bill.Amount != 0) {
-                thereIsMoney = true;
-                break;
-            }
-        }
-        return thereIsMoney;
+        Integer res = billsBox.values().stream().reduce(0, Integer::sum);
+        return res > 0;
     }
 
     /**
      * @param nominal number nominal value of the bill
      */
     public static void addBill(int nominal) {
-        for (int i = 0; i < 6; i++) {
-            if (Bills[i].Nominal == nominal) {
-                Bills[i].Amount += 1;
-            }
-        }
+        billsBox.replace(nominal, billsBox.get(nominal) + 1);
         addToLog(" Was added " + nominal + " UAH to the ATM");
     }
 
@@ -144,9 +130,7 @@ public class Store {
     }
 
     public static void printCash() {
-        for (Bill bill : Bills) {
-            System.out.println(">> Bills of nominal " + bill.Nominal + " - " + bill.Amount);
-        }
+        billsBox.forEach((key, value) -> System.out.println(">> Bills of nominal " + key + " : " + value));
     }
 
     /**
@@ -154,15 +138,5 @@ public class Store {
      */
     public static void changeStrategy(int strategyVariant) {
         strategy = strategyVariant;
-    }
-
-    public static class Bill {
-        public int Nominal;
-        public int Amount;
-
-        public Bill(int n, int a) {
-            this.Nominal = n;
-            this.Amount = a;
-        }
     }
 }
