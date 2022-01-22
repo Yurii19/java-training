@@ -2,10 +2,17 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class UserInterface {
+
+    Store theStore;
+
+    public UserInterface(Store aStore) {
+        this.theStore = aStore;
+    }
+
     /**
      * @throws if user input value that do not match any of offered command
      */
-    static void askUser() {
+    void askUser() {
         System.out.println(">> There are available commands : put 100, give 15, cash, stat, strategy. Type 'exit' for end the session ");
         serveNoMoney();
         Scanner sc = new Scanner(System.in);
@@ -20,7 +27,7 @@ public class UserInterface {
                 serveStatDialog(sc);
             }
             if (inputtedData[0].equals("stat")) {
-                Store.printStat();
+                theStore.printStat();
             }
             if (inputtedData[0].equals("give")) {
                 serveGiveDialog(sc, Integer.parseInt(inputtedData[1]));
@@ -39,8 +46,8 @@ public class UserInterface {
     }
 
 
-    private static void serveNoMoney() {
-        if (!Store.checkBills()) {
+    private  void serveNoMoney() {
+        if (!theStore.checkBills()) {
             System.out.println("There no money at the ATM !");
         }
     }
@@ -48,19 +55,19 @@ public class UserInterface {
     /**
      * @param strategyVariant number associated with the specified strategy of giving money
      */
-    private static void serveStrategyDialog(int strategyVariant) {
-        Store.changeStrategy(strategyVariant);
+    private  void serveStrategyDialog(int strategyVariant) {
+        theStore.changeStrategy(strategyVariant);
     }
 
     /**
      * @param sc instance of class Scanner
      */
-    private static void serveGiveDialog(Scanner sc, int amountOfMoney) {
-        if (Store.strategy == 1) {
-            Store.giveMoney(amountOfMoney);
+    private void serveGiveDialog(Scanner sc, int amountOfMoney) {
+        if (theStore.getStrategy() == 1) {
+            theStore.giveMoney(amountOfMoney);
         }
-        if (Store.strategy == 2) {
-            Store.giveMoney2(amountOfMoney);
+        if (theStore.getStrategy() == 2) {
+            theStore.giveMoney2(amountOfMoney);
         }
     }
 
@@ -68,8 +75,8 @@ public class UserInterface {
     /**
      * @param sc instance of class Scanner
      */
-    private static void serveStatDialog(Scanner sc) {
-        Store.printCash();
+    private  void serveStatDialog(Scanner sc) {
+        theStore.printCash();
     }
 
 
@@ -77,9 +84,9 @@ public class UserInterface {
      * @param sc   instance of class Scanner
      * @param bill nominal of the bill
      */
-    private static void servePutDialog(Scanner sc, int bill) {
+    private  void servePutDialog(Scanner sc, int bill) {
         if (bill == 1 || bill == 2 || bill == 5 || bill == 10 || bill == 20 || bill == 100) {
-            Store.addBill(bill);
+            theStore.addBill(bill);
         } else {
             System.out.println(">> Input a valid bill nominal.");
         }

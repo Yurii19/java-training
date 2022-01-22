@@ -3,30 +3,29 @@ import java.util.*;
 
 public class Store {
 
-    static ArrayList<String> operationsLog = new ArrayList<String>();
-    static int strategy = 1;
+    ArrayList<String> operationsLog;
+    private int strategy = 1;
 
-    static LinkedHashMap<Integer, Integer> billsBox = new LinkedHashMap<Integer, Integer>() {{
-        put(1, 0);
-        put(2, 0);
-        put(5, 0);
-        put(10, 10);
-        put(20, 0);
-        put(100, 3);
-    }};
+
+    LinkedHashMap<Integer, Integer> billsBox;
+
+    public Store(LinkedHashMap<Integer, Integer> bills) {
+        this.billsBox = bills;
+        this.operationsLog = new ArrayList<String>();
+    }
 
     /**
      * @param entry string which describe operation with bills in the ATM
      */
-    private static void addToLog(String entry) {
+    private void addToLog(String entry) {
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
-        operationsLog.add(timeStamp + entry);
+        this.operationsLog.add(timeStamp + entry);
     }
 
     /**
      * @param amount - amount of money which user wish to withdraw
      */
-    public static void giveMoney2(int amount) {
+    public void giveMoney2(int amount) {
         LinkedHashMap<Integer, Integer> billsBoxCopy = new LinkedHashMap<Integer, Integer>(billsBox);
         int change = amount;
         System.out.println("give Money 2");
@@ -43,7 +42,7 @@ public class Store {
                 }
             }//end of for loop
             if (change == 0) {
-                System.out.println(makeGiveReport(billsBox, billsBoxCopy));
+                System.out.println(makeGiveReport(this.billsBox, billsBoxCopy));
                 billsBox = billsBoxCopy;
                 stopper = false;
                 addToLog(" Were given " + amount + " UAH");
@@ -58,7 +57,7 @@ public class Store {
     /**
      * @param amount - amount of money which user wish to withdraw
      */
-    public static void giveMoney(int amount) {
+    public void giveMoney(int amount) {
         LinkedHashMap<Integer, Integer> billsBoxCopy = new LinkedHashMap<Integer, Integer>(billsBox);
         int change = amount;
 
@@ -106,7 +105,7 @@ public class Store {
         return "Were given: " + report.toString();
     }
 
-    public static boolean checkBills() {
+    public boolean checkBills() {
         Integer res = billsBox.values().stream().reduce(0, Integer::sum);
         return res > 0;
     }
@@ -114,29 +113,41 @@ public class Store {
     /**
      * @param nominal number nominal value of the bill
      */
-    public static void addBill(int nominal) {
+    public void addBill(int nominal) {
         billsBox.replace(nominal, billsBox.get(nominal) + 1);
         addToLog(" Was added " + nominal + " UAH to the ATM");
     }
 
-    public static void printStat() {
+    public void printStat() {
         if (operationsLog.size() < 1) {
             System.out.println(">> There are no records yet");
-            return;
         }
         for (String bill : operationsLog) {
             System.out.println(">> " + bill);
         }
+        Integer moneyAmount = billsBox.entrySet().stream().map(entry -> entry.getValue() * entry.getKey()).reduce(0, Integer::sum);
+        System.out.println(">> Total amount of cash in the ATM - " + moneyAmount + " UAH");
     }
 
-    public static void printCash() {
+//    void getCash(){
+//        //Integer res = billsBox.values().stream().reduce(0, Integer::sum);
+//
+//        Integer res = billsBox.entrySet().stream().map(entry -> entry.getValue() * entry.getKey()).reduce(0,Integer::sum);
+//
+//    }
+
+    public void printCash() {
         billsBox.forEach((key, value) -> System.out.println(">> Bills of nominal " + key + " : " + value));
     }
 
     /**
      * @param strategyVariant number associated with the specified strategy of giving money
      */
-    public static void changeStrategy(int strategyVariant) {
+    public void changeStrategy(int strategyVariant) {
         strategy = strategyVariant;
+    }
+
+    public int getStrategy() {
+        return this.strategy;
     }
 }

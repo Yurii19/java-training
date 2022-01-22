@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a7b5d864-5a64-4ed8-88e7-3e648ac64c7c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ATM.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-exadel/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-exadel/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-exadel/Store$Bill.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/java-exadel/Store.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-exadel/Store.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ATM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ATM.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Store.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
