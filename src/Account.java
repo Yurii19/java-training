@@ -1,9 +1,10 @@
 public class Account {
     private Integer money;
-    public final String Owner;
+    public final String OwnerID;
 
-    public Account(String owner) {
-        Owner = owner;
+    public Account(String owner, Integer money) {
+        this.OwnerID = owner;
+        this.money = money;
     }
 
     public void setMoney(Integer money) {

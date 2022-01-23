@@ -63,12 +63,7 @@ public class UserInterface {
      * @param sc instance of class Scanner
      */
     private void serveGiveDialog(Scanner sc, int amountOfMoney) {
-        if (theStore.getStrategy() == 1) {
-            theStore.giveMoney(amountOfMoney);
-        }
-        if (theStore.getStrategy() == 2) {
-            theStore.giveMoney2(amountOfMoney);
-        }
+       theStore.giveMoney(amountOfMoney);
     }
 
 

@@ -25,84 +25,21 @@ public class Store {
     /**
      * @param amount - amount of money which user wish to withdraw
      */
-    public void giveMoney2(int amount) {
-        LinkedHashMap<Integer, Integer> billsBoxCopy = new LinkedHashMap<Integer, Integer>(billsBox);
-        int change = amount;
-        System.out.println("give Money 2");
-        boolean stopper = true;
-        while (stopper) {
-            int copyOfChange = change;
-
-            for (Map.Entry<Integer, Integer> entry : billsBoxCopy.entrySet()) {
-                int nominal = entry.getKey();
-                int billsAtATM = entry.getValue();
-                if (change > nominal) {
-                    change = change - nominal;
-                    billsBoxCopy.put(nominal, (entry.getValue() - 1));
-                }
-            }//end of for loop
-            if (change == 0) {
-                System.out.println(makeGiveReport(this.billsBox, billsBoxCopy));
-                billsBox = billsBoxCopy;
-                stopper = false;
-                addToLog(" Were given " + amount + " UAH");
-            }
-            if (change == copyOfChange) {
-                stopper = false;
-                System.out.println("There are no enough Bills !");
-            }
-        }
-    }
-
-    /**
-     * @param amount - amount of money which user wish to withdraw
-     */
     public void giveMoney(int amount) {
-        LinkedHashMap<Integer, Integer> billsBoxCopy = new LinkedHashMap<Integer, Integer>(billsBox);
-        int change = amount;
 
-        List<Integer> nominalKeys = new ArrayList(billsBox.keySet());
-        Collections.reverse(nominalKeys);
-
-        for (Integer nominal : nominalKeys) {
-            int billsAtATM = billsBoxCopy.get(nominal);
-            int amountRequiredBills = change / nominal;
-            boolean isEnoughBillsAtATM = amountRequiredBills <= billsAtATM;
-            if (billsAtATM == 0) {
-                continue;
-            } else if (isEnoughBillsAtATM) {
-                change = change - nominal * amountRequiredBills;
-                billsBoxCopy.put(nominal, (billsAtATM - amountRequiredBills));
-
-            } else if (!isEnoughBillsAtATM) {
-                change = change - nominal * billsAtATM;
-                billsBoxCopy.put(nominal, 0);
-            }
+        BigBillsStrategy theStrategy1 = new BigBillsStrategy();
+        BalancedStrategy theStrategy2 = new BalancedStrategy();
+        LinkedHashMap<Integer, Integer> billsBoxCopy = null;
+        if (strategy == 1) {
+            billsBoxCopy = theStrategy1.giveMoney(billsBox, amount);
+        } else if (strategy == 2) {
+            billsBoxCopy = theStrategy2.giveMoney(billsBox, amount);
         }
-        if (change == 0) {
-            System.out.println(makeGiveReport(billsBox, billsBoxCopy));
+
+        if (!(billsBoxCopy == null)) {
             billsBox = billsBoxCopy;
             addToLog(" Were given " + amount + " UAH");
-        } else {
-            System.out.println("There are no enough Bills !");
         }
-    }
-
-    /**
-     * @param billsBoxBefore array contains information about different ATM bills before operation
-     * @param billsBoxAfter  newArray array contains information about different ATM bills after operation
-     * @return string the contains information about how much and what nominal where given
-     */
-    private static String makeGiveReport(LinkedHashMap<Integer, Integer> billsBoxBefore, LinkedHashMap<Integer, Integer> billsBoxAfter) {
-        StringBuilder report = new StringBuilder("");
-        billsBoxBefore.entrySet().forEach(el -> {
-            int diff = el.getValue() - billsBoxAfter.get(el.getKey());
-            if (diff > 0) {
-                String logRow = " " + diff + " bills of " + el.getKey() + ";";
-                report.append(logRow);
-            }
-        });
-        return "Were given: " + report.toString();
     }
 
     public boolean checkBills() {
