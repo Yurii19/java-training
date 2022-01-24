@@ -7,8 +7,12 @@ public class Account {
         this.money = money;
     }
 
-    public void setMoney(Integer money) {
-        this.money = money;
+    public void putMoney(Integer money) {
+        this.money = this.money + money;
+    }
+
+    public void takeMoney(Integer money) {
+        this.money = this.money - money;
     }
 
     public Integer getMoney() {

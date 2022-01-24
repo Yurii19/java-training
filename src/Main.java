@@ -14,12 +14,16 @@ public class Main {
             put(100, 3);
         }};
 
-        Account acc1 = new Account("yurii", 1000);
+        Account acc1 = new Account("Yurii", 1000);
         Account acc2 = new Account("Evhen", 2000);
-        ArrayList<Account> clients = new ArrayList<Account>(){} ;
-        clients.add(acc1);
+        ArrayList<Account> clients = new ArrayList<Account>() {{
+            add(new Account("Yurii", 1000));
+            add(new Account("Evhen", 2000));
+            add(new Account("Helen", 2000));
+        }};
 
-        ATM atm1 = new ATM(billsBox);
+
+        ATM atm1 = new ATM(billsBox, clients);
         atm1.theInterface.askUser();
     }
 }

@@ -29,6 +29,7 @@ public class Store {
 
         BigBillsStrategy theStrategy1 = new BigBillsStrategy();
         BalancedStrategy theStrategy2 = new BalancedStrategy();
+
         LinkedHashMap<Integer, Integer> billsBoxCopy = null;
         if (strategy == 1) {
             billsBoxCopy = theStrategy1.giveMoney(billsBox, amount);
@@ -66,13 +67,6 @@ public class Store {
         System.out.println(">> Total amount of cash in the ATM - " + moneyAmount + " UAH");
     }
 
-//    void getCash(){
-//        //Integer res = billsBox.values().stream().reduce(0, Integer::sum);
-//
-//        Integer res = billsBox.entrySet().stream().map(entry -> entry.getValue() * entry.getKey()).reduce(0,Integer::sum);
-//
-//    }
-
     public void printCash() {
         billsBox.forEach((key, value) -> System.out.println(">> Bills of nominal " + key + " : " + value));
     }
@@ -82,9 +76,5 @@ public class Store {
      */
     public void changeStrategy(int strategyVariant) {
         strategy = strategyVariant;
-    }
-
-    public int getStrategy() {
-        return this.strategy;
     }
 }
