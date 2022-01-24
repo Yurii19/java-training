@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Store {
 
-    ArrayList<String> operationsLog;
+    List<String> operationsLog;
     private int strategy = 1;
 
 
@@ -60,9 +60,9 @@ public class Store {
         if (operationsLog.size() < 1) {
             System.out.println(">> There are no records yet");
         }
-        for (String bill : operationsLog) {
-            System.out.println(">> " + bill);
-        }
+//        for (String bill : operationsLog) {
+//            System.out.println(">> " + bill);
+//        }
         Integer moneyAmount = billsBox.entrySet().stream().map(entry -> entry.getValue() * entry.getKey()).reduce(0, Integer::sum);
         System.out.println(">> Total amount of cash in the ATM - " + moneyAmount + " UAH");
     }

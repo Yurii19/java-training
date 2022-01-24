@@ -1,9 +1,10 @@
 public class Account {
+
     private Integer money;
-    public final String OwnerID;
+    private final String OWNER_ID;
 
     public Account(String owner, Integer money) {
-        this.OwnerID = owner;
+        this.OWNER_ID = owner;
         this.money = money;
     }
 
@@ -19,5 +20,8 @@ public class Account {
         return money;
     }
 
+    public String getOWNER_ID() {
+        return OWNER_ID;
+    }
 
 }

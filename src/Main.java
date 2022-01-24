@@ -14,8 +14,6 @@ public class Main {
             put(100, 3);
         }};
 
-        Account acc1 = new Account("Yurii", 1000);
-        Account acc2 = new Account("Evhen", 2000);
         ArrayList<Account> clients = new ArrayList<Account>() {{
             add(new Account("Yurii", 1000));
             add(new Account("Evhen", 2000));
@@ -27,4 +25,3 @@ public class Main {
         atm1.theInterface.askUser();
     }
 }
-
