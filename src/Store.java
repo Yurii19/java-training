@@ -14,6 +14,10 @@ public class Store {
         this.operationsLog = new ArrayList<String>();
     }
 
+    public void writeTheLog(){
+        
+    }
+
     /**
      *
      * @param anATM - ATM instance that serve the account
@@ -24,10 +28,13 @@ public class Store {
         String entry = " - "+ anATM.getCurrentAccount().getOWNER_ID()+ " " + operationType +" "+ money+" UAH, " + anATM;
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
         this.operationsLog.add(timeStamp + entry);
+
     }
 
     /**
-     * @param amount - amount of money which user wish to withdraw
+     *
+     * @param amount amount of money which user wish to withdraw
+     * @param theAtm - the instance of ATM object which serve accounts
      */
     public void giveMoney(int amount, ATM theAtm) {
         Account currentAccount = theAtm.getCurrentAccount();

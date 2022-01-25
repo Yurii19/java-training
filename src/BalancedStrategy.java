@@ -2,20 +2,16 @@ import java.util.*;
 
 public class BalancedStrategy extends Strategy {
 
-  // public ArrayList<String> operationsLog;
-
     @Override
     public LinkedHashMap<Integer, Integer> giveMoney(LinkedHashMap<Integer, Integer> billsBox, int amount) {
         LinkedHashMap<Integer, Integer> billsBoxCopy = new LinkedHashMap<>(billsBox);
         int change = amount;
         LinkedHashMap<Integer, Integer> result = null;
-        //   boolean stopper = true;
         while (true) {
             int copyOfChange = change;
 
             for (Map.Entry<Integer, Integer> entry : billsBoxCopy.entrySet()) {
                 int nominal = entry.getKey();
-                //  int billsAtATM = entry.getValue();
                 if (change > nominal) {
                     change = change - nominal;
                     billsBoxCopy.put(nominal, (entry.getValue() - 1));

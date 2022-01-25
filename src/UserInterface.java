@@ -58,8 +58,12 @@ public class UserInterface {
         }
     }
 
+    /**
+     *
+     * @param sc instance of class Scaner
+     * @param userId - field of Account class instance that used for identify it
+     */
     private void serveLogin(Scanner sc, String userId) {
-
         Account targetAccount = theATM.getAccountById(userId);
         if (targetAccount != null) {
             theATM.loginAccount(userId);
