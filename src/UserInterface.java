@@ -4,22 +4,28 @@ import java.util.Scanner;
 public class UserInterface {
 
     Store theStore;
+    ATM theATM;
 
-    public UserInterface(Store aStore) {
+    public UserInterface(Store aStore, ATM anATM) {
         this.theStore = aStore;
+        this.theATM = anATM;
     }
 
     /**
      * @throws if user input value that do not match any of offered command
      */
     void askUser() {
-        System.out.println("Please input your identifier");
         Scanner sc = new Scanner(System.in);
-        String ask = sc.nextLine();
-        serveLogin(ask);
-        //  System.out.println("ask");
-        // Scanner sc = new Scanner(System.in);
+
         try {
+            Account currentAccount = theATM.getCurrentAccount();;
+            while (currentAccount == null){
+                System.out.println(">> Please input your identifier");
+                String ask = sc.nextLine();
+                serveLogin(sc, ask);
+                currentAccount = theATM.getCurrentAccount();
+            }
+
             System.out.println(">> There are available commands : put 100, give 15, cash, stat, strategy. Type 'exit' for end the session ");
             serveNoMoney();
             String userRequest = sc.nextLine();
@@ -42,20 +48,31 @@ public class UserInterface {
             }
             if (userRequest.equals("exit")) {
                 return;
+            } else {
+                askUser();
             }
-            askUser();
+
         } catch (Exception e) {
             System.err.println(e + ": You might have inputted wrong value.");
             askUser();
         }
     }
 
-    private void serveLogin(String userId) {
-        
-        if (userId.equals("Yurii")) {
+    private void serveLogin(Scanner sc, String userId) {
+
+        Account targetAccount = theATM.getAccountById(userId);
+        if (targetAccount != null) {
+            theATM.loginAccount(userId);
             System.out.println("Hello " + userId + " !");
         } else {
-            System.out.println("The user " + userId + " not found !");
+            System.out.println(">> The user " + userId + " not found ! Would u like create new user  " + userId + " ? Y/N");
+            String yesOrNo = sc.nextLine();
+            if (yesOrNo.equals("Y")) {
+                theATM.createAccount(userId);
+                theATM.loginAccount(userId);
+            } else if (yesOrNo.equals("N")) {
+                return;
+            }
         }
     }
 
@@ -76,7 +93,7 @@ public class UserInterface {
      * @param sc instance of class Scanner
      */
     private void serveGiveDialog(Scanner sc, int amountOfMoney) {
-        theStore.giveMoney(amountOfMoney);
+        theStore.giveMoney(amountOfMoney, theATM);
     }
 
 
@@ -94,7 +111,7 @@ public class UserInterface {
      */
     private void servePutDialog(Scanner sc, int bill) {
         if (bill == 1 || bill == 2 || bill == 5 || bill == 10 || bill == 20 || bill == 100) {
-            theStore.addBill(bill);
+            theStore.addBill(bill, theATM);
         } else {
             System.out.println(">> Input a valid bill nominal.");
         }

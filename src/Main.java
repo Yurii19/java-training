@@ -15,7 +15,7 @@ public class Main {
         }};
 
         ArrayList<Account> clients = new ArrayList<Account>() {{
-            add(new Account("Yurii", 1000));
+            add(new Account("Yurii", 100));
             add(new Account("Evhen", 2000));
             add(new Account("Helen", 2000));
         }};

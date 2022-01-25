@@ -21,7 +21,7 @@ public class Account {
     }
 
     public String getOWNER_ID() {
-        return OWNER_ID;
+        return this.OWNER_ID;
     }
 
 }
