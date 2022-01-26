@@ -15,7 +15,7 @@ public class Store {
     }
 
     public void writeTheLog(){
-        
+
     }
 
     /**
@@ -28,7 +28,7 @@ public class Store {
         String entry = " - "+ anATM.getCurrentAccount().getOWNER_ID()+ " " + operationType +" "+ money+" UAH, " + anATM;
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
         this.operationsLog.add(timeStamp + entry);
-
+        WriteToFile.writeToFile(timeStamp + entry);
     }
 
     /**
