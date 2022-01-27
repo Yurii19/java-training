@@ -55,4 +55,8 @@ public class ATM {
         this.theInterface = new UserInterface(this.theStore, this);
         this.clients = clients;
     }
+
+    public UserInterface getTheInterface() {
+        return  this.theInterface;
+    }
 }

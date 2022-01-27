@@ -20,6 +20,8 @@ public class Main {
             add(new Account("Helen", 2000));
         }};
 
+        System.out.println(Thread.currentThread());
+
         ATM atm1 = new ATM(billsBox, clients);
         atm1.getTheInterface().askUser();
     }

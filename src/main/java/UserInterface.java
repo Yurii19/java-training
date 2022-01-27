@@ -18,7 +18,7 @@ public class UserInterface {
         Scanner sc = new Scanner(System.in);
 
         try {
-            Account currentAccount = theATM.getCurrentAccount();;
+            Account currentAccount = theATM.getCurrentAccount();
             while (currentAccount == null){
                 System.out.println(">> Please input your identifier");
                 String ask = sc.nextLine();
