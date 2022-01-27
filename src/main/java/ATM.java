@@ -4,10 +4,11 @@ import java.util.List;
 
 public class ATM {
 
-    Store theStore;
-    UserInterface theInterface;
-    List<Account> clients;
-    Account currentAccount = null;
+    private Store theStore;
+    private UserInterface theInterface;
+    private List<Account> clients;
+    private Account currentAccount;
+
 
     public Account getCurrentAccount() {
         return currentAccount;
@@ -15,11 +16,12 @@ public class ATM {
 
     /**
      * Function set the account for manipulate it data
+     *
      * @param accountId - field of Account class instance that used for identify it
      */
-    public void loginAccount(String accountId){
+    public void loginAccount(String accountId) {
         Account targetAccount = this.getAccountById(accountId);
-        if (targetAccount != null){
+        if (targetAccount != null) {
             this.currentAccount = targetAccount;
         }
     }
@@ -29,16 +31,21 @@ public class ATM {
      * @return instance of Account class that match with id argument
      */
     public Account getAccountById(String accountID) {
-        Account account = clients.stream().filter(el -> el.getOWNER_ID().equals(accountID)).findAny().orElse(null);
+        Account account = clients
+                .stream()
+                .filter(el -> el.getOWNER_ID().equals(accountID))
+                .findAny()
+                .orElse(null);
         return account;
     }
 
 
     /**
      * Function create instance of class Account and put it into the set of accounts
+     *
      * @param accountID - field of Account class instance that used for identify it
      */
-    public void createAccount(String accountID){
+    public void createAccount(String accountID) {
         this.clients.add(new Account(accountID, 1000));
     }
 

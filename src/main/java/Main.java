@@ -21,6 +21,6 @@ public class Main {
         }};
 
         ATM atm1 = new ATM(billsBox, clients);
-        atm1.theInterface.askUser();
+        atm1.getTheInterface().askUser();
     }
 }
