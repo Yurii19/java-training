@@ -80,7 +80,10 @@ public class Store {
         for (String bill : operationsLog) {
             System.out.println(">> " + bill);
         }
-        Integer moneyAmount = billsBox.entrySet().stream().map(entry -> entry.getValue() * entry.getKey()).reduce(0, Integer::sum);
+        int moneyAmount = billsBox.entrySet()
+                .stream()
+                .map(entry -> entry.getValue() * entry.getKey())
+                .reduce(0, Integer::sum);
         System.out.println(">> Total amount of cash in the ATM - " + moneyAmount + " UAH");
     }
 
