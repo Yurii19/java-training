@@ -1,5 +1,5 @@
 public class MultiplyDeposit implements Runnable {
-    Account theAccount;
+    private Account theAccount;
 
     @Override
     public void run() {

@@ -4,15 +4,10 @@ import java.util.List;
 
 public class ATM {
 
-    private Store theStore;
+    private final Store theStore;
     private UserInterface theInterface;
     private List<Account> clients;
     private Account currentAccount;
-
-
-    public Account getCurrentAccount() {
-        return currentAccount;
-    }
 
     /**
      * Function set the account for manipulate it data
@@ -56,7 +51,11 @@ public class ATM {
         this.clients = clients;
     }
 
+    public synchronized Account getCurrentAccount() {
+        return currentAccount;
+    }
+
     public UserInterface getTheInterface() {
-        return  this.theInterface;
+        return this.theInterface;
     }
 }
