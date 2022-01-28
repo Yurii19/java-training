@@ -1,11 +1,11 @@
 public class Account {
 
-    private Integer money;
+    private Integer deposit;
     private final String OWNER_ID;
 
     public Account(String owner, Integer money) {
         this.OWNER_ID = owner;
-        this.money = money;
+        this.deposit = money;
     }
 
     /**
@@ -13,7 +13,7 @@ public class Account {
      * @param money - amount of money that was removed from the account
      */
     public void putMoney(Integer money) {
-        this.money = this.money + money;
+        this.deposit = this.deposit + money;
     }
 
     /**
@@ -21,11 +21,11 @@ public class Account {
      * @param money - amount of money that will removed from the account
      */
     public void takeMoney(Integer money) {
-        this.money = this.money - money;
+        this.deposit = this.deposit - money;
     }
 
-    public Integer getMoney() {
-        return money;
+    public Integer getDeposit() {
+        return deposit;
     }
 
     public String getOWNER_ID() {

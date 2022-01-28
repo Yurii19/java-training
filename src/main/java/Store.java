@@ -39,7 +39,7 @@ public class Store {
     public void giveMoney(int amount, ATM theAtm) {
         Account currentAccount = theAtm.getCurrentAccount();
         System.out.println(amount+" - "+currentAccount.toString());
-        if (currentAccount.getMoney() >= amount) {
+        if (currentAccount.getDeposit() >= amount) {
             BigBillsStrategy theStrategy1 = new BigBillsStrategy();
             BalancedStrategy theStrategy2 = new BalancedStrategy();
 

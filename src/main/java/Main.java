@@ -5,6 +5,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String args[]) {
 
+        MultiplyDeposit.test(7,2);
+
         LinkedHashMap<Integer, Integer> billsBox = new LinkedHashMap<Integer, Integer>() {{
             put(1, 0);
             put(2, 0);
