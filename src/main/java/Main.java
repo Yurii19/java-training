@@ -24,7 +24,11 @@ public class Main {
 
         System.out.println(Thread.currentThread());
 
+
+
         ATM atm1 = new ATM(billsBox, clients);
+        atm1.startDeposits();
         atm1.getTheInterface().askUser();
+        atm1.startDeposits();
     }
 }

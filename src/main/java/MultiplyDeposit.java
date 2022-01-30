@@ -1,16 +1,30 @@
+import java.util.List;
+
 public class MultiplyDeposit implements Runnable {
-    private Account theAccount;
+    private final List<Account> clients ;
+
+    public MultiplyDeposit(List<Account> clients) {
+        this.clients = clients;
+    }
+
 
     @Override
     public void run() {
-        synchronized (theAccount) {
+        synchronized (clients) {
             while (true) {
+
                 try {
                     Thread.sleep(10000);
-                    int dividend = theAccount.getDeposit() / 100;
-                    theAccount.putMoney(dividend);
+                    clients.forEach(account->{
+                       // System.out.println("^^^ "+account.getDeposit());
+                        int dividend = account.getDeposit() / 100;
+                        account.putMoney(dividend);
+                    });
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
+                    return;
                 }
             }
         }

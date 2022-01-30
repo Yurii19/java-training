@@ -14,31 +14,29 @@ public class Store {
         this.operationsLog = new ArrayList<String>();
     }
 
-    public void writeTheLog(){
+    public void writeTheLog() {
 
     }
 
     /**
-     *
-     * @param anATM - ATM instance that serve the account
+     * @param anATM         - ATM instance that serve the account
      * @param operationType - type operation which user required
-     * @param money amount of money added or got from the account
+     * @param money         amount of money added or got from the account
      */
     private void addToLog(ATM anATM, String operationType, Integer money) {
-        String entry = " - "+ anATM.getCurrentAccount().getOWNER_ID()+ " " + operationType +" "+ money+" UAH, " + anATM;
+        String entry = " - " + anATM.getCurrentAccount().getOWNER_ID() + " " + operationType + " " + money + " UAH, " + anATM;
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
         this.operationsLog.add(timeStamp + entry);
         WriteToFile.writeToFile(timeStamp + entry);
     }
 
     /**
-     *
      * @param amount amount of money which user wish to withdraw
      * @param theAtm - the instance of ATM object which serve accounts
      */
     public void giveMoney(int amount, ATM theAtm) {
         Account currentAccount = theAtm.getCurrentAccount();
-        System.out.println(amount+" - "+currentAccount.toString());
+        // System.out.println(amount + " - " + currentAccount.toString());
         if (currentAccount.getDeposit() >= amount) {
             BigBillsStrategy theStrategy1 = new BigBillsStrategy();
             BalancedStrategy theStrategy2 = new BalancedStrategy();
@@ -55,6 +53,7 @@ public class Store {
                 addToLog(theAtm, "receive", amount);
                 currentAccount.takeMoney(amount);
             }
+            System.out.println(">> Deposit value is : " + currentAccount.getDeposit());
         } else {
             System.out.println(">> There are not enough money !");
         }

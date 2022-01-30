@@ -25,7 +25,7 @@ public class Account {
     }
 
     public Integer getDeposit() {
-        return deposit;
+        return this.deposit;
     }
 
     public String getOWNER_ID() {
