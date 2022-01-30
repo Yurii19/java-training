@@ -2,21 +2,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 public class ATM {
 
     private final Store theStore;
     private UserInterface theInterface;
-    private List<Account> clients =  Collections.synchronizedList(new ArrayList<>());
+    private List<Account> clients = Collections.synchronizedList(new ArrayList<>());
     private Account currentAccount;
+    private final Semaphore theSemaphore = new Semaphore(20);
 
-    public void startDeposits(){
-       // System.out.println("^^^ ");
-       MultiplyDeposit p1 = new MultiplyDeposit((this.clients));
-    //    PayService p2 = new PayService(this.clients);
-       Thread  pt = new Thread(p1,"th1");
-       pt.start();
-       // p2.run();
+    public void startDeposits() {
+        MultiplyDeposit multiplyDeposit = new MultiplyDeposit(this.clients, theSemaphore);
+        PayService payService = new PayService(this.clients, theSemaphore);
+        Thread multiply = new Thread(multiplyDeposit, "multiply");
+        Thread paying = new Thread(payService, "paying");
+        multiply.start();
+        paying.start();
     }
 
     /**

@@ -1,34 +1,32 @@
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 public class PayService implements Runnable {
     private final List<Account> clients;
+    Semaphore semaphore;
 
-    public PayService(List<Account> clients) {
+    public PayService(List<Account> clients, Semaphore aSemaphore) {
         this.clients = clients;
+        this.semaphore = aSemaphore;
     }
 
     @Override
     public void run() {
-        synchronized (clients) {
-            while (true) {
-                try {
-                    Thread.sleep(60000);
-
-                    clients.forEach(account -> {
-                        if (account.getDeposit() >= 10) {
-                            account.takeMoney(10);
-                        }
-                    });
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return;
-                }
+        while (true) {
+            try {
+                semaphore.acquire();
+                Thread.sleep(60000);
+                clients.forEach(account -> {
+                    if (account.getDeposit() >= 10) {
+                        account.takeMoney(10);
+                    }
+                });
+                semaphore.release();
+            } catch (Exception e) {
+                e.printStackTrace();
+                semaphore.release();
+                return;
             }
         }
     }
-
-//    public static void test(int x, int y) {
-//        System.out.println("Test result : " + x / y);
-//    }
 }

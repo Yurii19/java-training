@@ -1,31 +1,31 @@
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 public class MultiplyDeposit implements Runnable {
-    private final List<Account> clients ;
+    private final List<Account> clients;
+    Semaphore semaphore;
 
-    public MultiplyDeposit(List<Account> clients) {
+    public MultiplyDeposit(List<Account> clients, Semaphore aSemaphore) {
         this.clients = clients;
+        this.semaphore = aSemaphore;
     }
 
 
     @Override
     public void run() {
-        synchronized (clients) {
-            while (true) {
+        while (true) {
+            try {
+                semaphore.acquire();
+                Thread.sleep(10000);
+                clients.forEach(account -> {
+                    int dividend = account.getDeposit() / 100;
+                    account.putMoney(dividend);
 
-                try {
-                    Thread.sleep(10000);
-                    clients.forEach(account->{
-                       // System.out.println("^^^ "+account.getDeposit());
-                        int dividend = account.getDeposit() / 100;
-                        account.putMoney(dividend);
-                    });
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return;
-                }
+                });
+                semaphore.release();
+            } catch (Exception e) {
+                e.printStackTrace();
+                semaphore.release();
             }
         }
     }

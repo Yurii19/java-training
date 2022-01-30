@@ -36,7 +36,7 @@ public class Store {
      */
     public void giveMoney(int amount, ATM theAtm) {
         Account currentAccount = theAtm.getCurrentAccount();
-        // System.out.println(amount + " - " + currentAccount.toString());
+        // System.out.println(amount + " =>- " + currentAccount.getDeposit());
         if (currentAccount.getDeposit() >= amount) {
             BigBillsStrategy theStrategy1 = new BigBillsStrategy();
             BalancedStrategy theStrategy2 = new BalancedStrategy();
@@ -53,7 +53,7 @@ public class Store {
                 addToLog(theAtm, "receive", amount);
                 currentAccount.takeMoney(amount);
             }
-            System.out.println(">> Deposit value is : " + currentAccount.getDeposit());
+            System.out.println(">> Deposit value of "+ currentAccount.getOWNER_ID()+" is : " + currentAccount.getDeposit());
         } else {
             System.out.println(">> There are not enough money !");
         }
