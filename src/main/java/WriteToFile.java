@@ -8,10 +8,7 @@ public class WriteToFile {
         try( FileWriter myWriter = new FileWriter("log.txt",true)) {
 
             myWriter.write(logEntry+ "|+|");
-            myWriter.close();
-            System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }

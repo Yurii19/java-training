@@ -14,7 +14,6 @@ public class PayService implements Runnable {
     public void run() {
         while (true) {
             try {
-
                 Thread.sleep(60000);
                 semaphore.acquire();
                 clients.forEach(account -> {

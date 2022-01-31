@@ -17,6 +17,8 @@ public class ATM {
         PayService payService = new PayService(this.clients, theSemaphore);
         Thread multiply = new Thread(multiplyDeposit, "multiply");
         Thread paying = new Thread(payService, "paying");
+        multiply.setDaemon(true);
+        paying.setDaemon(true);
         multiply.start();
         paying.start();
     }

@@ -17,11 +17,9 @@ public class MultiplyDeposit implements Runnable {
             try {
                 Thread.sleep(10000);
                 semaphore.acquire();
-                System.out.println("currentThread name -> " + Thread.currentThread().getName());
                 clients.forEach(account -> {
                     int dividend = account.getDeposit() / 100;
                     account.putMoney(dividend);
-
                 });
                 semaphore.release();
             } catch (Exception e) {
