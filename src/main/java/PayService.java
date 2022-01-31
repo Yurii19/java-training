@@ -14,8 +14,9 @@ public class PayService implements Runnable {
     public void run() {
         while (true) {
             try {
-                semaphore.acquire();
+
                 Thread.sleep(60000);
+                semaphore.acquire();
                 clients.forEach(account -> {
                     if (account.getDeposit() >= 10) {
                         account.takeMoney(10);
