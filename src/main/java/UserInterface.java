@@ -51,8 +51,7 @@ public class UserInterface {
                     serveGiveDialog(sc, Integer.parseInt(inputtedData[1]));
                 } else if (inputtedData[0].equals("strategy")) {
                     serveStrategyDialog(Integer.parseInt(inputtedData[1]));
-                }
-                if (inputtedData[0].equals("exit")) {
+                } else if (inputtedData[0].equals("exit")) {
                     return;
                 } else {
                     System.out.println("Wrong command !");

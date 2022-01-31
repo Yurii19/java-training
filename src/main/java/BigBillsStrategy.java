@@ -35,7 +35,7 @@ public class BigBillsStrategy extends Strategy {
             return billsBoxCopy;
         } else {
             System.out.println("There are no enough Bills !");
-            return billsBox;
+            return null;
         }
     }
 }

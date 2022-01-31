@@ -14,10 +14,6 @@ public class Store {
         this.operationsLog = new ArrayList<String>();
     }
 
-    public void writeTheLog() {
-
-    }
-
     /**
      * @param anATM         - ATM instance that serve the account
      * @param operationType - type operation which user required
@@ -36,7 +32,6 @@ public class Store {
      */
     public void giveMoney(int amount, ATM theAtm) {
         Account currentAccount = theAtm.getCurrentAccount();
-        // System.out.println(amount + " =>- " + currentAccount.getDeposit());
         if (currentAccount.getDeposit() >= amount) {
             BigBillsStrategy theStrategy1 = new BigBillsStrategy();
             BalancedStrategy theStrategy2 = new BalancedStrategy();
