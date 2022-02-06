@@ -24,6 +24,7 @@ public class MultiplyDeposit implements Runnable {
                 semaphore.release();
             } catch (Exception e) {
                 e.printStackTrace();
+                System.err.println(e);
                 semaphore.release();
             }
         }

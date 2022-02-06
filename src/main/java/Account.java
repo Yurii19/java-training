@@ -1,9 +1,9 @@
 public class Account {
 
-    private Integer deposit;
+    private int deposit;
     private final String OWNER_ID;
 
-    public Account(String owner, Integer money) {
+    public Account(String owner, int money) {
         this.OWNER_ID = owner;
         this.deposit = money;
     }
@@ -12,7 +12,7 @@ public class Account {
      *
      * @param money - amount of money that was removed from the account
      */
-    public void putMoney(Integer money) {
+    public void putMoney(int money) {
         this.deposit = this.deposit + money;
     }
 
@@ -20,7 +20,7 @@ public class Account {
      *
      * @param money - amount of money that will removed from the account
      */
-    public void takeMoney(Integer money) {
+    public void takeMoney(int money) {
         this.deposit = this.deposit - money;
     }
 
