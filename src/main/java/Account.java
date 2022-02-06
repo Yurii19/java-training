@@ -28,7 +28,7 @@ public class Account {
         return this.deposit;
     }
 
-    public String getOWNER_ID() {
+    public String getOwnerId() {
         return this.OWNER_ID;
     }
 

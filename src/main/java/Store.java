@@ -20,7 +20,7 @@ public class Store {
      * @param money         amount of money added or got from the account
      */
     private void addToLog(ATM anATM, String operationType, Integer money) {
-        String entry = " - " + anATM.getCurrentAccount().getOWNER_ID() + " " + operationType + " " + money + " UAH, " + anATM;
+        String entry = " - " + anATM.getCurrentAccount().getOwnerId() + " " + operationType + " " + money + " UAH, " + anATM;
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
         this.operationsLog.add(timeStamp + entry);
         WriteToFile.writeToFile(timeStamp + entry);
@@ -48,7 +48,7 @@ public class Store {
                 addToLog(theAtm, "receive", amount);
                 currentAccount.takeMoney(amount);
             }
-            System.out.println(">> Deposit value of "+ currentAccount.getOWNER_ID()+" is : " + currentAccount.getDeposit());
+            System.out.println(">> Deposit value of "+ currentAccount.getOwnerId()+" is : " + currentAccount.getDeposit());
         } else {
             System.out.println(">> There are not enough money !");
         }
