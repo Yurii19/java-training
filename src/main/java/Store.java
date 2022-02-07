@@ -1,12 +1,14 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Store {
 
+    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
     List<String> operationsLog;
     private int strategy = 1;
-
-
     LinkedHashMap<Integer, Integer> billsBox;
 
     public Store(LinkedHashMap<Integer, Integer> bills) {
@@ -14,31 +16,23 @@ public class Store {
         this.operationsLog = new ArrayList<String>();
     }
 
-    public void writeTheLog(){
-
-    }
-
     /**
-     *
-     * @param anATM - ATM instance that serve the account
+     * @param anATM         - ATM instance that serve the account
      * @param operationType - type operation which user required
-     * @param money amount of money added or got from the account
+     * @param money         amount of money added or got from the account
      */
     private void addToLog(ATM anATM, String operationType, Integer money) {
-        String entry = " - "+ anATM.getCurrentAccount().getOWNER_ID()+ " " + operationType +" "+ money+" UAH, " + anATM;
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
-        this.operationsLog.add(timeStamp + entry);
-        WriteToFile.writeToFile(timeStamp + entry);
+        String entry = anATM.getCurrentAccount().getOwnerId() + " " + operationType + " " + money + " UAH, " + anATM;
+        LOG.info(entry);
     }
 
     /**
-     *
      * @param amount amount of money which user wish to withdraw
      * @param theAtm - the instance of ATM object which serve accounts
      */
     public void giveMoney(int amount, ATM theAtm) {
         Account currentAccount = theAtm.getCurrentAccount();
-        if (currentAccount.getMoney() <= amount) {
+        if (currentAccount.getDeposit() >= amount) {
             BigBillsStrategy theStrategy1 = new BigBillsStrategy();
             BalancedStrategy theStrategy2 = new BalancedStrategy();
 
@@ -49,11 +43,12 @@ public class Store {
                 billsBoxCopy = theStrategy2.giveMoney(billsBox, amount);
             }
 
-            if (billsBoxCopy != null) {
+            if (billsBoxCopy.size() != 0) {
                 billsBox = billsBoxCopy;
                 addToLog(theAtm, "receive", amount);
                 currentAccount.takeMoney(amount);
             }
+            System.out.println(">> Deposit value of " + currentAccount.getOwnerId() + " is : " + currentAccount.getDeposit());
         } else {
             System.out.println(">> There are not enough money !");
         }
@@ -80,7 +75,10 @@ public class Store {
         for (String bill : operationsLog) {
             System.out.println(">> " + bill);
         }
-        Integer moneyAmount = billsBox.entrySet().stream().map(entry -> entry.getValue() * entry.getKey()).reduce(0, Integer::sum);
+        int moneyAmount = billsBox.entrySet()
+                .stream()
+                .map(entry -> entry.getValue() * entry.getKey())
+                .reduce(0, Integer::sum);
         System.out.println(">> Total amount of cash in the ATM - " + moneyAmount + " UAH");
     }
 

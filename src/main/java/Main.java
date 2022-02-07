@@ -1,8 +1,14 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class Main {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
+
     public static void main(String args[]) {
 
         LinkedHashMap<Integer, Integer> billsBox = new LinkedHashMap<Integer, Integer>() {{
@@ -21,6 +27,8 @@ public class Main {
         }};
 
         ATM atm1 = new ATM(billsBox, clients);
-        atm1.theInterface.askUser();
+        atm1.startDeposits();
+        atm1.getTheInterface().askUser();
+        atm1.startDeposits();
     }
 }

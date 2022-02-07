@@ -1,8 +1,12 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class UserInterface {
 
+    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
     Store theStore;
     ATM theATM;
 
@@ -18,53 +22,58 @@ public class UserInterface {
         Scanner sc = new Scanner(System.in);
 
         try {
-            Account currentAccount = theATM.getCurrentAccount();;
-            while (currentAccount == null){
+            Account currentAccount = theATM.getCurrentAccount();
+            while (currentAccount == null) {
                 System.out.println(">> Please input your identifier");
                 String ask = sc.nextLine();
+                if (ask.trim().equals("exit")) {
+                    break;
+                }
                 serveLogin(sc, ask);
                 currentAccount = theATM.getCurrentAccount();
             }
-
-            System.out.println(">> There are available commands : put 100, give 15, cash, stat, strategy. Type 'exit' for end the session ");
-            serveNoMoney();
-            String userRequest = sc.nextLine();
-            String[] inputtedData = Parser.getInput(userRequest);
-            System.out.println(">> Commands : " + Arrays.toString(inputtedData));
-            if (inputtedData[0].equals("put")) {
-                servePutDialog(sc, Integer.parseInt(inputtedData[1]));
-            }
-            if (inputtedData[0].equals("cash")) {
-                serveStatDialog(sc);
-            }
-            if (inputtedData[0].equals("stat")) {
-                theStore.printStat();
-            }
-            if (inputtedData[0].equals("give")) {
-                serveGiveDialog(sc, Integer.parseInt(inputtedData[1]));
-            }
-            if (inputtedData[0].equals("strategy")) {
-                serveStrategyDialog(Integer.parseInt(inputtedData[1]));
-            }
-            if (userRequest.equals("exit")) {
+            if (currentAccount == null) {
                 return;
-            } else {
-                askUser();
+            }
+
+            String lastCommand = "";
+
+            while (!lastCommand.equals("exit")) {
+                System.out.println(">> There are available commands : put 100, give 15, cash, stat, strategy. Type 'exit' for end the session ");
+                serveNoMoney();
+                String userRequest = sc.nextLine();
+                String[] inputtedData = Parser.getInput(userRequest);
+                lastCommand = inputtedData[0];
+                System.out.println(">> Commands : " + Arrays.toString(inputtedData));
+                if (inputtedData[0].equals("put")) {
+                    servePutDialog(sc, Integer.parseInt(inputtedData[1]));
+                } else if (inputtedData[0].equals("cash")) {
+                    serveStatDialog(sc);
+                } else if (inputtedData[0].equals("stat")) {
+                    theStore.printStat();
+                } else if (inputtedData[0].equals("give")) {
+                    serveGiveDialog(sc, Integer.parseInt(inputtedData[1]));
+                } else if (inputtedData[0].equals("strategy")) {
+                    serveStrategyDialog(Integer.parseInt(inputtedData[1]));
+                } else if (inputtedData[0].equals("exit")) {
+                    return;
+                } else {
+                    System.out.println("Wrong command !");
+                }
             }
 
         } catch (Exception e) {
-            System.err.println(e + ": You might have inputted wrong value.");
+            LOG.error(e + ": You might have inputted wrong value.");
             askUser();
         }
     }
 
     /**
-     *
-     * @param sc instance of class Scaner
+     * @param sc     instance of class Scaner
      * @param userId - field of Account class instance that used for identify it
      */
     private void serveLogin(Scanner sc, String userId) {
-        Account targetAccount = theATM.getAccountById(userId);
+        Account targetAccount = theATM.getAccountById(userId.trim());
         if (targetAccount != null) {
             theATM.loginAccount(userId);
             System.out.println("Hello " + userId + " !");

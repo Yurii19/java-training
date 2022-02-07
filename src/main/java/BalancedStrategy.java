@@ -6,7 +6,7 @@ public class BalancedStrategy extends Strategy {
     public LinkedHashMap<Integer, Integer> giveMoney(LinkedHashMap<Integer, Integer> billsBox, int amount) {
         LinkedHashMap<Integer, Integer> billsBoxCopy = new LinkedHashMap<>(billsBox);
         int change = amount;
-        LinkedHashMap<Integer, Integer> result = null;
+        LinkedHashMap<Integer, Integer> result = new LinkedHashMap<>() ;
         while (true) {
             int copyOfChange = change;
 
