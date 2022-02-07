@@ -1,9 +1,17 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class Main {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
+
     public static void main(String args[]) {
+        LOG.error("HELLO");
+
 
         LinkedHashMap<Integer, Integer> billsBox = new LinkedHashMap<Integer, Integer>() {{
             put(1, 0);
