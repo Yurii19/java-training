@@ -43,7 +43,7 @@ public class Store {
                 billsBoxCopy = theStrategy2.giveMoney(billsBox, amount);
             }
 
-            if (billsBoxCopy != null) {
+            if (billsBoxCopy.size() != 0) {
                 billsBox = billsBoxCopy;
                 addToLog(theAtm, "receive", amount);
                 currentAccount.takeMoney(amount);

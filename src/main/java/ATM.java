@@ -13,10 +13,10 @@ public class ATM {
     private Account currentAccount;
 
     public void startDeposits() {
-        MultiplyDeposit multiplyDeposit = new MultiplyDeposit(this.clients, theSemaphore);
-        PayService payService = new PayService(this.clients, theSemaphore);
-        Thread multiply = new Thread(multiplyDeposit, "multiply");
-        Thread paying = new Thread(payService, "paying");
+        ServeAccounts raiseDeposit = new ServeAccounts(this.clients, theSemaphore, 10000, "profit");
+        ServeAccounts getPayment = new ServeAccounts(this.clients, theSemaphore, 60000, "payment");
+        Thread multiply = new Thread(raiseDeposit, "multiply");
+        Thread paying = new Thread(getPayment, "paying");
         multiply.setDaemon(true);
         paying.setDaemon(true);
         multiply.start();

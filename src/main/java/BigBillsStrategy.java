@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 public class BigBillsStrategy extends Strategy {
 
@@ -34,8 +31,8 @@ public class BigBillsStrategy extends Strategy {
             System.out.println(makeGiveReport(billsBox, billsBoxCopy));
             return billsBoxCopy;
         } else {
-            System.out.println("There are no enough Bills !");
-            return null;
+            System.out.println("There are no enough bills !");
+            return new LinkedHashMap<>();
         }
     }
 }
