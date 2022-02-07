@@ -1,12 +1,14 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Store {
 
+    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
     List<String> operationsLog;
     private int strategy = 1;
-
-
     LinkedHashMap<Integer, Integer> billsBox;
 
     public Store(LinkedHashMap<Integer, Integer> bills) {
@@ -20,10 +22,8 @@ public class Store {
      * @param money         amount of money added or got from the account
      */
     private void addToLog(ATM anATM, String operationType, Integer money) {
-        String entry = " - " + anATM.getCurrentAccount().getOwnerId() + " " + operationType + " " + money + " UAH, " + anATM;
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
-        this.operationsLog.add(timeStamp + entry);
-        WriteToFile.writeToFile(timeStamp + entry);
+        String entry = anATM.getCurrentAccount().getOwnerId() + " " + operationType + " " + money + " UAH, " + anATM;
+        LOG.info(entry);
     }
 
     /**
@@ -48,7 +48,7 @@ public class Store {
                 addToLog(theAtm, "receive", amount);
                 currentAccount.takeMoney(amount);
             }
-            System.out.println(">> Deposit value of "+ currentAccount.getOwnerId()+" is : " + currentAccount.getDeposit());
+            System.out.println(">> Deposit value of " + currentAccount.getOwnerId() + " is : " + currentAccount.getDeposit());
         } else {
             System.out.println(">> There are not enough money !");
         }

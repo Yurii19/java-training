@@ -1,8 +1,12 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class UserInterface {
 
+    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
     Store theStore;
     ATM theATM;
 
@@ -59,7 +63,7 @@ public class UserInterface {
             }
 
         } catch (Exception e) {
-            System.err.println(e + ": You might have inputted wrong value.");
+            LOG.error(e + ": You might have inputted wrong value.");
             askUser();
         }
     }

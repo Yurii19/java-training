@@ -1,7 +1,12 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
 public class ServeAccounts implements Runnable {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
     private final List<Account> clients;
     private final int INTERVAL;
     private final String operationType; //payment , profit
@@ -32,8 +37,7 @@ public class ServeAccounts implements Runnable {
                 });
                 semaphore.release();
             } catch (Exception e) {
-                e.printStackTrace();
-                semaphore.release();
+                LOG.error(String.valueOf(e));
                 return;
             }
         }
