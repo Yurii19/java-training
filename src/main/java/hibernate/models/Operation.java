@@ -34,12 +34,4 @@ public class Operation {
     @NonNull
     private long amount;
 
-//    public Operation(){}
-//
-//    public Operation(Client client, Atm atm, OperationType type, long amount) {
-//        this.client = client;
-//        this.atm = atm;
-//        this.type = type;
-//        this.amount = amount;
-//    }
 }

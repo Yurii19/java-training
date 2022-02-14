@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 @UtilityClass
 @Slf4j
 public class SessionFactoryUtil {
-    private static final Logger LOG = LoggerFactory.getLogger(SessionFactoryUtil.class);
+  //  private static final Logger LOG = LoggerFactory.getLogger(SessionFactoryUtil.class);
     private static SessionFactory sessionFactory;
 
 //    private SessionFactoryUtil() {

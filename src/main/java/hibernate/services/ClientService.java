@@ -1,8 +1,9 @@
 package hibernate.services;
 
-import hibernate.dao.Dao;
 import hibernate.models.Atm;
 import hibernate.models.Client;
+
+import java.util.List;
 
 public class ClientService extends Service<Client> {
 
@@ -10,9 +11,9 @@ public class ClientService extends Service<Client> {
         super(Client.class);
     }
 
-//    public String getUserById(Long id){
-//        return ;
-//    }
+    public List<Client> getAllClients() {
+        return dao.getAll();
+    }
 
     public long claim(Client client, Atm atm, int amount) {
         long sum = client.claim(atm, amount);

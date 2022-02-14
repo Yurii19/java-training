@@ -22,38 +22,27 @@ public class Client {
     private String name;
     private long account;
 
-    @OneToMany(mappedBy = "client")
-    private List<Operation> operations = new ArrayList<>() ;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Operation> operations = new ArrayList<>();
 
-   public Client(){}
-    public Client(String name){
+    public Client() {
+    }
+
+    public Client(String name) {
         this.name = name;
     }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public long getAccount() {
-//        return account;
-//    }
 
-//    public long getId() {
-//        return id;
-//    }
-
-
-    public long claim(Atm atm,int amount){
+    public long claim(Atm atm, int amount) {
         long effectiveAmount = Math.min(account, amount);
         account -= effectiveAmount;
-        Operation operation = new Operation(this, atm, OperationType.GET, effectiveAmount );
+        Operation operation = new Operation(this, atm, OperationType.GET, effectiveAmount);
         operations.add(operation);
         return effectiveAmount;
     }
 
-    public void deposit(Atm atm,int amount ){
-        account+= amount;
-        Operation operation = new Operation(this, atm, OperationType.PUT, amount );
+    public void deposit(Atm atm, int amount) {
+        account += amount;
+        Operation operation = new Operation(this, atm, OperationType.PUT, amount);
         operations.add(operation);
     }
 }

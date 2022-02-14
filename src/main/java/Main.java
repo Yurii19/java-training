@@ -1,29 +1,25 @@
 import hibernate.models.Client;
-import hibernate.models.Operation;
+import hibernate.services.ClientInterface;
 import hibernate.services.ClientService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.lang.model.element.Name;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Scanner;
 
 public class Main {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
-
     public static void main(String args[]) {
-        System.out.println("Hello world !");
+       ClientService clientService = new ClientService();
 
-        ClientService clientService = new ClientService();
-        Client client = clientService.createNew(new Client("Ross"));
-        System.out.println(client.getName() + " - - - - " + client.getId());
-        String name = clientService.get(3).getName();
-        System.out.println(name);
+      // Client h = clientService.get("Helen");
+      //  System.out.println("HHHHHHHHHHHHHHH-> "+ h);
+//        Client client = clientService.createNew(new Client("Ross"));
+//        System.out.println(client.getName() + " - - - - " + client.getId());
+//        String name = clientService.get(3).getName();
+//        System.out.println(name);
+//
+//        Operation op = new Operation();
+      //  clientService.getAllClients();
 
-        Operation op = new Operation();
+        ClientInterface clientInterface = new ClientInterface(clientService);
 
+        clientInterface.askUser();
 
 //        LinkedHashMap<Integer, Integer> billsBox = new LinkedHashMap<Integer, Integer>() {{
 //            put(1, 0);

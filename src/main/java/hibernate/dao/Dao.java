@@ -4,15 +4,40 @@ import hibernate.models.Client;
 import hibernate.utils.SessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+
 
 public class Dao<T> {
     private final Class<T> type;
 
     public Dao(Class<T> type) {
         this.type = type;
+    }
+
+    public T getByName(String name) {
+        SessionFactory sessionFactory = SessionFactoryUtil.getSessionFactory();
+        if (sessionFactory == null) {
+            return null;
+        }
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Query<T> query = session.createQuery("from " + type.getSimpleName() + " a where a.name =: name", type);
+            query.setParameter("name", name);
+            return query.uniqueResult();
+        }
+    }
+
+    public List<T> getAll() {
+        SessionFactory sessionFactory = SessionFactoryUtil.getSessionFactory();
+        if (sessionFactory == null) {
+            return null;
+        }
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            return session.createQuery("SELECT a FROM " + type.getSimpleName() + " a", type).getResultList();
+        }
     }
 
     public T getById(long id) {
@@ -26,7 +51,7 @@ public class Dao<T> {
     }
 
     public Long create(T value) {
-      return   performOperationAndGetResult(value, (session, value1) -> (Long) session.save(value));
+        return performOperationAndGetResult(value, (session, value1) -> (Long) session.save(value));
     }
 
     public void update(T value) {
