@@ -1,8 +1,10 @@
 import hibernate.models.Client;
+import hibernate.models.Operation;
 import hibernate.services.ClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.lang.model.element.Name;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
@@ -15,8 +17,12 @@ public class Main {
         System.out.println("Hello world !");
 
         ClientService clientService = new ClientService();
-        Client client = clientService.createNew(new Client("Jane"));
-        System.out.println(client.getName() + " - - - - "+client.getId());
+        Client client = clientService.createNew(new Client("Ross"));
+        System.out.println(client.getName() + " - - - - " + client.getId());
+        String name = clientService.get(3).getName();
+        System.out.println(name);
+
+        Operation op = new Operation();
 
 
 //        LinkedHashMap<Integer, Integer> billsBox = new LinkedHashMap<Integer, Integer>() {{

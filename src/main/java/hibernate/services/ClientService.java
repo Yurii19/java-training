@@ -10,6 +10,10 @@ public class ClientService extends Service<Client> {
         super(Client.class);
     }
 
+//    public String getUserById(Long id){
+//        return ;
+//    }
+
     public long claim(Client client, Atm atm, int amount) {
         long sum = client.claim(atm, amount);
         update(client);

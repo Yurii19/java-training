@@ -1,12 +1,18 @@
 package hibernate.models;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "clients")
-
+@Getter
+@Setter
+@Data
 public class Client {
 
     @Id
@@ -19,22 +25,22 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private List<Operation> operations = new ArrayList<>() ;
 
-    public Client(){}
+   public Client(){}
     public Client(String name){
         this.name = name;
     }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public long getAccount() {
+//        return account;
+//    }
 
-    public String getName() {
-        return name;
-    }
-
-    public long getAccount() {
-        return account;
-    }
-
-    public long getId() {
-        return id;
-    }
+//    public long getId() {
+//        return id;
+//    }
 
 
     public long claim(Atm atm,int amount){

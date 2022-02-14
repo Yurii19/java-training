@@ -27,7 +27,6 @@ public class Dao<T> {
 
     public Long create(T value) {
       return   performOperationAndGetResult(value, (session, value1) -> (Long) session.save(value));
-       // return value;
     }
 
     public void update(T value) {

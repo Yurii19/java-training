@@ -3,6 +3,8 @@ package hibernate.utils;
 import hibernate.models.Atm;
 import hibernate.models.Client;
 import hibernate.models.Operation;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -11,13 +13,14 @@ import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+@UtilityClass
+@Slf4j
 public class SessionFactoryUtil {
     private static final Logger LOG = LoggerFactory.getLogger(SessionFactoryUtil.class);
     private static SessionFactory sessionFactory;
 
-    private SessionFactoryUtil() {
-    }
+//    private SessionFactoryUtil() {
+//    }
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory != null) {
@@ -34,7 +37,7 @@ public class SessionFactoryUtil {
             sessionFactory = configuration.buildSessionFactory(registry);
             return sessionFactory;
         } catch (HibernateException e) {
-            LOG.error("Could not create Session Factory",e);
+            log.error("Could not create Session Factory",e);
         }
         return null;
     }
