@@ -1,9 +1,9 @@
 package hibernate.dao;
 
-import hibernate.models.Client;
 import hibernate.utils.SessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -68,7 +68,9 @@ public class Dao<T> {
             return;
         }
         try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
             operation.accept(session, value);
+            transaction.commit();
         }
     }
 

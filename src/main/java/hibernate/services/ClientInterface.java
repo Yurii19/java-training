@@ -1,74 +1,76 @@
 package hibernate.services;
 
+import hibernate.models.Atm;
 import hibernate.models.Client;
+import hibernate.models.Operation;
+import hibernate.models.OperationType;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.Scanner;
 
 @Slf4j
 public class ClientInterface {
 
     private final ClientService clientService;
+    private final Atm atm;
 
-    public ClientInterface(ClientService clientService) {
-        this.clientService = clientService;
+    private Client client;
+
+
+    public ClientInterface(Atm atm) {
+        this.clientService = new ClientService();
+        this.atm = atm;
     }
 
     public void askUser() {
         Scanner sc = new Scanner(System.in);
 
         try {
-            List<Client> clients = null;
+            // Client aClient = null;
 
-
-            while (clients == null) {
-                System.out.println(">> Please input your identifier");
+            while (client == null) {
+                System.out.println(">> Please input your name");
                 String answer = sc.nextLine();
-              //  clients = clientService.getAllClients();
-                if (answer.equals("exit")){
+                if (answer.equals("exit")) {
+                    this.client = null;
                     break;
                 }
-                Client theClient = clientService.get(answer);
+                client = clientService.get(answer);
 
-                if (theClient == null){
+                if (client == null) {
                     System.err.println("User not found.");
                     continue;
                 }
-                System.out.println(" >>>> " + clientService.get(answer));
-                //  System.out.println("***************");
-                //  clients = clientService.dao.getAll();
-                //  System.out.println(" >>>> " + clients);
+                System.out.println(" >> Hello " + client.getName() + "!");
+            }
 
-//               currentClient = clientService.get(2);
-//               if (ask.trim().equals("exit")) {
-//                   break;
-//               }
-//               serveLogin(sc, ask);
-//               currentAccount = theATM.getCurrentAccount();
-//           }
-//           if (currentAccount == null) {
-//               return;
-//           }
-//
-//           String lastCommand = "";
-//
-//           while (!lastCommand.equals("exit")) {
-//               System.out.println(">> There are available commands : put 100, give 15, cash, stat, strategy. Type 'exit' for end the session ");
+            while (client != null) {
+                System.out.println(">> There are available commands : put 100, give 15, cash, stat, strategy. Type 'exit' for end the session ");
 //               serveNoMoney();
-//               String userRequest = sc.nextLine();
-//               String[] inputtedData = Parser.getInput(userRequest);
-//               lastCommand = inputtedData[0];
-//               System.out.println(">> Commands : " + Arrays.toString(inputtedData));
-//               if (inputtedData[0].equals("put")) {
-//                   servePutDialog(sc, Integer.parseInt(inputtedData[1]));
-//               } else if (inputtedData[0].equals("cash")) {
+                String clientCommand = sc.nextLine();
+                String[] commands = hibernate.utils.Parser.getInput(clientCommand);
+                System.out.println(">> Commands : " + Arrays.toString(commands));
+                if (commands[0].equals("exit")) {
+                    client = null;
+                    break;
+                    //  throw new Exception("Client session end");
+                    //continue;
+                }
+                if (commands[0].equals("put")) {
+                    int amount = Integer.parseInt(commands[1]);
+                    clientService.deposit(client, atm, amount);
+                } else if (commands[0].equals("give")) {
+                    int amount = Integer.parseInt(commands[1]);
+                    // serveGiveDialog(sc, Integer.parseInt(inputtedData[1]));
+                    clientService.claim(client, atm, amount);
+                }
+//               else if (inputtedData[0].equals("cash")) {
 //                   serveStatDialog(sc);
 //               } else if (inputtedData[0].equals("stat")) {
 //                   theStore.printStat();
-//               } else if (inputtedData[0].equals("give")) {
-//                   serveGiveDialog(sc, Integer.parseInt(inputtedData[1]));
-//               } else if (inputtedData[0].equals("strategy")) {
+//               }
+//               else if (inputtedData[0].equals("strategy")) {
 //                   serveStrategyDialog(Integer.parseInt(inputtedData[1]));
 //               } else if (inputtedData[0].equals("exit")) {
 //                   return;
@@ -79,7 +81,7 @@ public class ClientInterface {
             //  System.out.println(" >>>> " + clients);
         } catch (Exception e) {
             log.error(e + ": You might have inputted wrong value.");
-            // askUser();
+            askUser();
         }
     }
 }

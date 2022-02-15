@@ -23,7 +23,7 @@ public class Operation {
     @NonNull
     private Client client;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "atm_id")
     @NonNull
     private Atm atm;

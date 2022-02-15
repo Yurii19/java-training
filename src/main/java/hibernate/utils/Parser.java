@@ -1,3 +1,5 @@
+package hibernate.utils;
+
 import java.util.Arrays;
 
 public class Parser {
@@ -7,7 +9,7 @@ public class Parser {
      * @return array of strings from source string
      */
     public static String[] getInput(String userInput){
-        String [] res = userInput.split(" ");
+        String [] res = userInput.trim().split(" ");
         return res;
     }
 }

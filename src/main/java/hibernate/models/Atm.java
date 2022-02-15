@@ -1,10 +1,13 @@
 package hibernate.models;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "atms")
+@Data
 public class Atm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

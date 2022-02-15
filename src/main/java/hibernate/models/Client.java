@@ -22,7 +22,7 @@ public class Client {
     private String name;
     private long account;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private List<Operation> operations = new ArrayList<>();
 
     public Client() {
@@ -33,6 +33,10 @@ public class Client {
     }
 
     public long claim(Atm atm, int amount) {
+        if (account < amount){
+            System.err.println("Not enough money");
+            return -1;
+        }
         long effectiveAmount = Math.min(account, amount);
         account -= effectiveAmount;
         Operation operation = new Operation(this, atm, OperationType.GET, effectiveAmount);

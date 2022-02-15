@@ -2,7 +2,7 @@ import java.util.*;
 
 public class BigBillsStrategy extends Strategy {
 
-    ArrayList<String> operationsLog;
+   // ArrayList<String> operationsLog;
 
     @Override
     public  LinkedHashMap<Integer, Integer> giveMoney(LinkedHashMap<Integer, Integer> billsBox, int amount) {

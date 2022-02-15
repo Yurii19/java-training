@@ -15,7 +15,7 @@ abstract class Service<T> {
     }
 
     public void update(T value) {
-        dao.create(value);
+        dao.update(value);
     }
 
     public void delete(T value) {

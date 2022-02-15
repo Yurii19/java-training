@@ -2,6 +2,8 @@ package hibernate.services;
 
 import hibernate.models.Atm;
 import hibernate.models.Client;
+import hibernate.models.Operation;
+import hibernate.models.OperationType;
 
 import java.util.List;
 
@@ -22,7 +24,10 @@ public class ClientService extends Service<Client> {
     }
 
     public void deposit(Client client, Atm atm, int amount) {
-        client.claim(atm, amount);
+        Operation operation = new Operation(client, atm, OperationType.PUT, amount);
+        OperationService operationService = new OperationService();
+        operationService.createNew(operation);
+        client.deposit(atm, amount);
         update(client);
     }
 }
