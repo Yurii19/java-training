@@ -17,9 +17,9 @@ public class AtmService extends Service {
     private void launchAtm() {
         atm = (Atm) get(ID);
         if (atm != null) {
-            this.clientInterface = new ClientInterface(atm);
+            this.clientInterface = new ClientInterface(atm, this);
         } else {
-            this.clientInterface = new ClientInterface(new Atm());
+            this.clientInterface = new ClientInterface(new Atm(), this);
         }
     }
 
