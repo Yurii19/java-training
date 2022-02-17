@@ -39,8 +39,6 @@ public class Client {
         }
         long effectiveAmount = Math.min(account, amount);
         account -= effectiveAmount;
-        Operation operation = new Operation(this, atm, OperationType.GET, effectiveAmount);
-        operations.add(operation);
         return effectiveAmount;
     }
 
@@ -48,5 +46,9 @@ public class Client {
         account += amount;
         Operation operation = new Operation(this, atm, OperationType.PUT, amount);
         operations.add(operation);
+    }
+
+    public void addOperation(Operation operation){
+        this.operations.add(operation);
     }
 }

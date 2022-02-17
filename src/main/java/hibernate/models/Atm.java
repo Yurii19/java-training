@@ -28,10 +28,14 @@ public class Atm {
     @Column(name = "slot_100")
     private int slot100Uah;
 
-    @OneToMany(mappedBy = "atm")
+    @OneToMany(mappedBy = "atm",fetch = FetchType.EAGER)
     private List<Operation> operations;
 
     public void updateSlots(LinkedHashMap<Integer, Integer> newBillsSet) {
+        if (newBillsSet == null) {
+            System.err.println("Not enough bills in the ATM");
+            return;
+        }
         newBillsSet.entrySet().forEach(e -> setAmountBills(e.getKey(), e.getValue()));
     }
 

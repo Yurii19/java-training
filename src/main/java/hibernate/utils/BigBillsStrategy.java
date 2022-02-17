@@ -35,7 +35,7 @@ public class BigBillsStrategy extends Strategy {
             int billsAtATM = billsBoxCopy.get(nominal);
             int amountRequiredBills = change / nominal;
             boolean isEnoughBillsAtATM = amountRequiredBills <= billsAtATM;
-            System.out.println(nominal + ">>>>" + billsAtATM);
+           // System.out.println(nominal + ">>>>" + billsAtATM);
             if (billsAtATM == 0) {
                 continue;
             } else if (isEnoughBillsAtATM) {
@@ -52,6 +52,7 @@ public class BigBillsStrategy extends Strategy {
             atm.updateSlots(billsBoxCopy);
         } else {
             System.err.println("There are no enough bills !");
+            atm.updateSlots(null);
         }
     }
 

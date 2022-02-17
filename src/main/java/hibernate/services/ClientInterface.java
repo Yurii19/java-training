@@ -7,6 +7,7 @@ import hibernate.models.OperationType;
 import hibernate.utils.BigBillsStrategy;
 import lombok.extern.slf4j.Slf4j;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -18,7 +19,6 @@ public class ClientInterface {
     private final Atm atm;
 
     private Client client;
-
 
     public ClientInterface(Atm atm, AtmService atmService) {
         this.clientService = new ClientService();
@@ -47,7 +47,6 @@ public class ClientInterface {
 //                }
 //                System.out.println(" >> Hello " + client.getName() + "!");
 //            }
-
             while (client != null) {
                 System.out.println(">> There are available commands : put 100, give 15, cash, stat, strategy. Type 'exit' for end the session ");
                 String clientCommand = sc.nextLine();
@@ -62,15 +61,15 @@ public class ClientInterface {
                     clientService.deposit(client, atm, amount);
                 } else if (commands[0].equals("give")) {
                     int amount = Integer.parseInt(commands[1]);
-                    clientService.claim(client, atm, amount);
-                    BigBillsStrategy bigBillsStrategy = new BigBillsStrategy(atm);
-                    bigBillsStrategy.giveMoney(amount);
-                    atmService.update(atm);
-
+                    serveGiveCommand(amount);
+//                    clientService.claim(client, atm, amount);
+//                    BigBillsStrategy bigBillsStrategy = new BigBillsStrategy(atm);
+//                    bigBillsStrategy.giveMoney(amount);
+//                    atmService.update(atm);
+                } else if (commands[0].equals("cash")) {
+                    serveCashDialog();
                 }
-//               else if (inputtedData[0].equals("cash")) {
-//                   serveStatDialog(sc);
-//               } else if (inputtedData[0].equals("stat")) {
+//               else if (inputtedData[0].equals("stat")) {
 //                   theStore.printStat();
 //               }
 //               else if (inputtedData[0].equals("strategy")) {
@@ -88,7 +87,15 @@ public class ClientInterface {
         }
     }
 
-    public void serveGiveCommand(int amount){
+    public void serveCashDialog() {
+        int[] keys = new int[]{1, 2, 5, 10, 20, 50, 100};
+        for (int key : keys){
+            System.out.println("Nominal : "+ key+", number : "+ atm.getAmountBills(key));
+        }
+        // atm.getAmountBills()
+    }
+
+    public void serveGiveCommand(int amount) {
         clientService.claim(client, atm, amount);
         BigBillsStrategy bigBillsStrategy = new BigBillsStrategy(atm);
         bigBillsStrategy.giveMoney(amount);
