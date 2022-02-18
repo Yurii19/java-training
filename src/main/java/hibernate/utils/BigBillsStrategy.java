@@ -6,26 +6,17 @@ import java.util.*;
 
 public class BigBillsStrategy extends Strategy {
 
-    ArrayList<String> operationsLog;
-    private final LinkedHashMap<Integer, Integer> billsBox = new LinkedHashMap<Integer, Integer>() {{
-        put(1, 0);
-        put(2, 0);
-        put(5, 0);
-        put(10, 0);
-        put(20, 0);
-        put(50, 0);
-        put(100, 0);
-    }};
+    private final LinkedHashMap<Integer, Integer> billsBox ;
+    private final Atm atm;
 
     public BigBillsStrategy(Atm atm) {
         this.atm = atm;
+        this.billsBox = atm.getSlots();
     }
-
-    private Atm atm;
 
     @Override
     public void giveMoney(int amount) {
-        initBoxes();
+        //initBoxes();
         LinkedHashMap<Integer, Integer> billsBoxCopy = new LinkedHashMap<>(billsBox);
         int change = amount;
         List<Integer> nominalKeys = new ArrayList(billsBox.keySet());
@@ -35,7 +26,6 @@ public class BigBillsStrategy extends Strategy {
             int billsAtATM = billsBoxCopy.get(nominal);
             int amountRequiredBills = change / nominal;
             boolean isEnoughBillsAtATM = amountRequiredBills <= billsAtATM;
-           // System.out.println(nominal + ">>>>" + billsAtATM);
             if (billsAtATM == 0) {
                 continue;
             } else if (isEnoughBillsAtATM) {
@@ -56,7 +46,7 @@ public class BigBillsStrategy extends Strategy {
         }
     }
 
-    public void initBoxes() {
-        billsBox.entrySet().forEach(e -> e.setValue(atm.getAmountBills(e.getKey())));
-    }
+//    public void initBoxes() {
+//        billsBox.entrySet().forEach(e -> e.setValue(atm.getAmountBills(e.getKey())));
+//    }
 }

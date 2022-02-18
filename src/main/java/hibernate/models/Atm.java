@@ -3,6 +3,7 @@ package hibernate.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -36,7 +37,14 @@ public class Atm {
             System.err.println("Not enough bills in the ATM");
             return;
         }
-        newBillsSet.entrySet().forEach(e -> setAmountBills(e.getKey(), e.getValue()));
+        newBillsSet.forEach((key, value) -> setAmountBills(key, value));
+    }
+
+    public LinkedHashMap<Integer, Integer> getSlots(){
+        int[] keys = new int[]{1, 2, 5, 10, 20, 50, 100};
+        LinkedHashMap<Integer, Integer> slots = new LinkedHashMap<>();
+        Arrays.stream(keys).forEach(e -> slots.put(e, getAmountBills(e)));
+        return slots;
     }
 
     public void setAmountBills(int nominal, int amount) {

@@ -3,6 +3,7 @@ package hibernate.utils;
 import hibernate.models.Atm;
 import hibernate.models.Client;
 import hibernate.models.Operation;
+import hibernate.models.Statistic;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
@@ -30,6 +31,7 @@ public class SessionFactoryUtil {
         configuration.addAnnotatedClass(Atm.class);
         configuration.addAnnotatedClass(Client.class);
         configuration.addAnnotatedClass(Operation.class);
+        configuration.addAnnotatedClass(Statistic.class);
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();

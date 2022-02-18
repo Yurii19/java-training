@@ -2,6 +2,7 @@ package hibernate.services;
 
 import hibernate.models.Atm;
 import hibernate.models.Client;
+import hibernate.models.Statistic;
 
 public class AtmService extends Service {
     private final int ID;
@@ -26,6 +27,12 @@ public class AtmService extends Service {
     public void ServeClient() {
         launchAtm();
         clientInterface.askUser();
+    }
+
+    public void updateAtm(){
+        this.update(atm);
+        StatisticService statisticService = new StatisticService(Statistic.class);
+        //Statistic statistic = Statistic
     }
 
 }

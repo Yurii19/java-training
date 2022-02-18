@@ -1,9 +1,6 @@
 package hibernate.services;
 
-import hibernate.models.Atm;
-import hibernate.models.Client;
-import hibernate.models.Operation;
-import hibernate.models.OperationType;
+import hibernate.models.*;
 import hibernate.utils.BigBillsStrategy;
 import lombok.extern.slf4j.Slf4j;
 
@@ -69,9 +66,10 @@ public class ClientInterface {
                 } else if (commands[0].equals("cash")) {
                     serveCashDialog();
                 }
-//               else if (inputtedData[0].equals("stat")) {
-//                   theStore.printStat();
-//               }
+               else if (commands[0].equals("stat")) {
+                   //commands.printStat();
+                    serveStatCommands();
+               }
 //               else if (inputtedData[0].equals("strategy")) {
 //                   serveStrategyDialog(Integer.parseInt(inputtedData[1]));
 //               } else if (inputtedData[0].equals("exit")) {
@@ -87,6 +85,14 @@ public class ClientInterface {
         }
     }
 
+    public void serveStatCommands() {
+        System.out.println(" << serveStatCommands >> ");
+        StatisticService statisticService = new StatisticService(Statistic.class);
+        Statistic statistic = (Statistic) statisticService.get(1);
+        statistic.updateSlots(null, OperationType.PUT);
+        System.out.println("Statistic ->>> " + statistic);
+    }
+
     public void serveCashDialog() {
         int[] keys = new int[]{1, 2, 5, 10, 20, 50, 100};
         for (int key : keys){
@@ -100,6 +106,10 @@ public class ClientInterface {
         BigBillsStrategy bigBillsStrategy = new BigBillsStrategy(atm);
         bigBillsStrategy.giveMoney(amount);
         atmService.update(atm);
+        //
+        StatisticService statisticService = new StatisticService(Statistic.class);
+
+       // Statistic statistic = statisticService.get()
     }
 
     private void loginClient(Scanner sc) {
