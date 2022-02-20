@@ -1,38 +1,31 @@
 package hibernate.services;
 
 import hibernate.models.Atm;
-import hibernate.models.Client;
 import hibernate.models.Statistic;
 
 public class AtmService extends Service {
-    private final int ID;
     private Atm atm;
     private ClientInterface clientInterface;
 
-
-    public AtmService(int id) {
+    public AtmService() {
         super(Atm.class);
-        this.ID = id;
     }
 
-    private void launchAtm() {
-        atm = (Atm) get(ID);
-        if (atm != null) {
-            this.clientInterface = new ClientInterface(atm, this);
-        } else {
-            this.clientInterface = new ClientInterface(new Atm(), this);
-        }
+    private void launchAtm(Atm atm) {
+        this.atm = atm;
     }
 
-    public void ServeClient() {
-        launchAtm();
+    public void ServeClient(Atm atm) {
+        launchAtm(atm);
+        this.clientInterface = new ClientInterface(this.atm, this);
         clientInterface.askUser();
     }
 
-    public void updateAtm(){
-        this.update(atm);
+    public Atm createNewWithStatistic(Atm newAtm) {
+        this.createNew(newAtm);
         StatisticService statisticService = new StatisticService(Statistic.class);
-        //Statistic statistic = Statistic
+        statisticService.createNew(new Statistic(newAtm));
+        return newAtm;
     }
 
 }

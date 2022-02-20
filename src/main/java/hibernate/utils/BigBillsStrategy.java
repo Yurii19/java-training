@@ -1,12 +1,15 @@
 package hibernate.utils;
 
 import hibernate.models.Atm;
+import hibernate.models.OperationType;
+import hibernate.models.Statistic;
+import hibernate.services.StatisticService;
 
 import java.util.*;
 
 public class BigBillsStrategy extends Strategy {
 
-    private final LinkedHashMap<Integer, Integer> billsBox ;
+    private final LinkedHashMap<Integer, Integer> billsBox;
     private final Atm atm;
 
     public BigBillsStrategy(Atm atm) {
@@ -16,7 +19,7 @@ public class BigBillsStrategy extends Strategy {
 
     @Override
     public void giveMoney(int amount) {
-        //initBoxes();
+        System.out.println("GIVEGIVEGIVEGIVEGIVEGIVEGIVEGIVEGIVEGIVEGIVEGIVE");
         LinkedHashMap<Integer, Integer> billsBoxCopy = new LinkedHashMap<>(billsBox);
         int change = amount;
         List<Integer> nominalKeys = new ArrayList(billsBox.keySet());
@@ -31,7 +34,6 @@ public class BigBillsStrategy extends Strategy {
             } else if (isEnoughBillsAtATM) {
                 change = change - nominal * amountRequiredBills;
                 billsBoxCopy.put(nominal, (billsAtATM - amountRequiredBills));
-
             } else if (!isEnoughBillsAtATM) {
                 change = change - nominal * billsAtATM;
                 billsBoxCopy.put(nominal, 0);
@@ -40,13 +42,16 @@ public class BigBillsStrategy extends Strategy {
         if (change == 0) {
             System.out.println(makeGiveReport(billsBox, billsBoxCopy));
             atm.updateSlots(billsBoxCopy);
+            LinkedHashMap<Integer, Integer> diff = new LinkedHashMap<>() ;
+            billsBox.forEach((key, value) -> diff.put(key, value - billsBoxCopy.get(key)));
+            StatisticService statisticService = new StatisticService(Statistic.class);
+            Statistic theStat = (Statistic) statisticService.get((int) atm.getId());
+            theStat.updateSlots(diff, OperationType.GET);
+            statisticService.update(theStat);
         } else {
             System.err.println("There are no enough bills !");
             atm.updateSlots(null);
         }
     }
 
-//    public void initBoxes() {
-//        billsBox.entrySet().forEach(e -> e.setValue(atm.getAmountBills(e.getKey())));
-//    }
 }

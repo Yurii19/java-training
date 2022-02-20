@@ -1,6 +1,7 @@
 package hibernate.services;
 
 import hibernate.dao.Dao;
+import hibernate.models.Atm;
 
 abstract class Service<T> {
     final Dao<T> dao;
@@ -28,5 +29,9 @@ abstract class Service<T> {
 
     public T get(String name) {
         return dao.getByName(name);
+    }
+
+    public T getByAtm(int atmId) {
+        return dao.getByAtm(atmId);
     }
 }

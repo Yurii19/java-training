@@ -1,5 +1,6 @@
 package hibernate.dao;
 
+import hibernate.models.Atm;
 import hibernate.utils.SessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,6 +28,17 @@ public class Dao<T> {
             Query<T> query = session.createQuery("from " + type.getSimpleName() + " a where a.name =: name", type);
             query.setParameter("name", name);
             return query.uniqueResult();
+        }
+    }
+
+    public T getByAtm(int atmId) {
+        SessionFactory sessionFactory = SessionFactoryUtil.getSessionFactory();
+        if (sessionFactory == null) {
+            return null;
+        }
+        try (Session session = SessionFactoryUtil.getSessionFactory().openSession()) {
+            Query<T> query = session.createQuery("FROM " + type.getSimpleName() + " s WHERE s.atm.id = " + atmId);
+            return (T) query.uniqueResult();
         }
     }
 

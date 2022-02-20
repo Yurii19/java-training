@@ -29,7 +29,7 @@ public class Atm {
     @Column(name = "slot_100")
     private int slot100Uah;
 
-    @OneToMany(mappedBy = "atm",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "atm", fetch = FetchType.EAGER)
     private List<Operation> operations;
 
     public void updateSlots(LinkedHashMap<Integer, Integer> newBillsSet) {
@@ -40,7 +40,7 @@ public class Atm {
         newBillsSet.forEach((key, value) -> setAmountBills(key, value));
     }
 
-    public LinkedHashMap<Integer, Integer> getSlots(){
+    public LinkedHashMap<Integer, Integer> getSlots() {
         int[] keys = new int[]{1, 2, 5, 10, 20, 50, 100};
         LinkedHashMap<Integer, Integer> slots = new LinkedHashMap<>();
         Arrays.stream(keys).forEach(e -> slots.put(e, getAmountBills(e)));
@@ -50,25 +50,25 @@ public class Atm {
     public void setAmountBills(int nominal, int amount) {
         switch (nominal) {
             case 1:
-                setSlot1Uah(amount);
+                setSlot1Uah(getSlot1Uah() + amount);
                 break;
             case 2:
-                setSlot2Uah(amount);
+                setSlot2Uah(getSlot2Uah() + amount);
                 break;
             case 5:
-                setSlot5Uah(amount);
+                setSlot5Uah(getSlot5Uah() + amount);
                 break;
             case 10:
-                setSlot10Uah(amount);
+                setSlot10Uah(getSlot10Uah() + amount);
                 break;
             case 20:
-                setSlot20Uah(amount);
+                setSlot20Uah(getSlot20Uah() + amount);
                 break;
             case 50:
-                setSlot50Uah(amount);
+                setSlot50Uah(getSlot50Uah() + amount);
                 break;
             case 100:
-                setSlot100Uah(amount);
+                setSlot100Uah(getSlot100Uah() + amount);
                 break;
             default:
                 break;

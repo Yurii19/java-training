@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.LinkedHashMap;
 
 import static hibernate.models.OperationType.GET;
+import static hibernate.models.OperationType.PUT;
 
 @Entity
 @Table(name = "statistics")
@@ -51,7 +52,12 @@ public class Statistic {
     @Column(name = "slot_100_sub")
     private int slot100Sub;
 
+    public Statistic(Atm atm) {
+        this.atm = atm;
+    }
+
     public Statistic() {
+
     }
 
     public void updateSlots(LinkedHashMap<Integer, Integer> slots, OperationType operationType) {
@@ -62,51 +68,51 @@ public class Statistic {
         switch (nominal) {
             case 1:
                 if (operationType == GET) {
-                    setSlot1Add(amount);
+                    setSlot1Sub(getSlot1Sub() + amount);
                 } else {
-                    setSlot1Sub(amount);
+                    setSlot1Add(getSlot1Add() + amount);
                 }
                 break;
             case 2:
                 if (operationType == GET) {
-                    setSlot2Add(amount);
+                    setSlot2Sub(getSlot2Sub() + amount);
                 } else {
-                    setSlot2Sub(amount);
+                    setSlot2Add(getSlot2Add() + amount);
                 }
                 break;
             case 5:
                 if (operationType == GET) {
-                    setSlot5Add(amount);
+                    setSlot5Sub(getSlot5Sub() + amount);
                 } else {
-                    setSlot5Sub(amount);
+                    setSlot5Add(getSlot5Add() + amount);
                 }
                 break;
             case 10:
                 if (operationType == GET) {
-                    setSlot10Add(amount);
+                    setSlot10Sub(getSlot10Sub() + amount);
                 } else {
-                    setSlot10Sub(amount);
+                    setSlot10Add(getSlot10Add() + amount);
                 }
                 break;
             case 20:
                 if (operationType == GET) {
-                    setSlot20Add(amount);
+                    setSlot20Sub(getSlot20Sub() + amount);
                 } else {
-                    setSlot20Sub(amount);
+                    setSlot20Add(getSlot20Add() + amount);
                 }
                 break;
             case 50:
                 if (operationType == GET) {
-                    setSlot50Add(amount);
+                    setSlot50Sub(getSlot50Sub() + amount);
                 } else {
-                    setSlot50Sub(amount);
+                    setSlot50Add(getSlot50Add() + amount);
                 }
                 break;
             case 100:
                 if (operationType == GET) {
-                    setSlot100Add(amount);
+                    setSlot100Sub(getSlot100Sub() + amount);
                 } else {
-                    setSlot100Sub(amount);
+                    setSlot100Add(getSlot100Add() + amount);
                 }
                 break;
             default:

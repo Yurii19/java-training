@@ -19,6 +19,7 @@ public class ClientService extends Service<Client> {
 
     public long claim(Client client, Atm atm, int amount) {
         long sum = client.claim(atm, amount);
+        if (sum < 0) { return -1;}
         if (sum > 0){
             Operation operation = new Operation(client, atm, OperationType.GET, amount);
             OperationService operationService = new OperationService();
