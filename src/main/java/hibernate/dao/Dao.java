@@ -1,6 +1,5 @@
 package hibernate.dao;
 
-import hibernate.models.Atm;
 import hibernate.utils.SessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

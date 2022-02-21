@@ -1,8 +1,6 @@
 import hibernate.models.Atm;
-import hibernate.models.Statistic;
 import hibernate.services.AtmService;
 import hibernate.services.ServeClientAccounts;
-import hibernate.services.StatisticService;
 
 public class Main {
 

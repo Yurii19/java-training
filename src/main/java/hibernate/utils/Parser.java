@@ -1,7 +1,5 @@
 package hibernate.utils;
 
-import java.util.Arrays;
-
 public class Parser {
 
     /**

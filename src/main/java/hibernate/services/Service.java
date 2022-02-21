@@ -1,7 +1,6 @@
 package hibernate.services;
 
 import hibernate.dao.Dao;
-import hibernate.models.Atm;
 
 abstract class Service<T> {
     final Dao<T> dao;

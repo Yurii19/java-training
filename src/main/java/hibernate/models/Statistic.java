@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.LinkedHashMap;
 
 import static hibernate.models.OperationType.GET;
-import static hibernate.models.OperationType.PUT;
 
 @Entity
 @Table(name = "statistics")

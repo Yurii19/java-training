@@ -11,17 +11,11 @@ import org.hibernate.HibernateException;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @UtilityClass
 @Slf4j
 public class SessionFactoryUtil {
-  //  private static final Logger LOG = LoggerFactory.getLogger(SessionFactoryUtil.class);
     private static SessionFactory sessionFactory;
-
-//    private SessionFactoryUtil() {
-//    }
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory != null) {

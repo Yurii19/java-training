@@ -19,7 +19,6 @@ public class BigBillsStrategy extends Strategy {
 
     @Override
     public void giveMoney(int amount) {
-        System.out.println("GIVEGIVEGIVEGIVEGIVEGIVEGIVEGIVEGIVEGIVEGIVEGIVE");
         LinkedHashMap<Integer, Integer> billsBoxCopy = new LinkedHashMap<>(billsBox);
         int change = amount;
         List<Integer> nominalKeys = new ArrayList(billsBox.keySet());

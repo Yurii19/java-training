@@ -20,7 +20,6 @@ public class BalancedStrategy extends Strategy {
 
     @Override
     public void giveMoney(int amount) {
-      //  public LinkedHashMap<Integer, Integer> giveMoney(LinkedHashMap<Integer, Integer> billsBox, int amount) {
         LinkedHashMap<Integer, Integer> billsBoxCopy = new LinkedHashMap<>(billsBox);
         int change = amount;
         LinkedHashMap<Integer, Integer> result = new LinkedHashMap<>();
