@@ -1,3 +1,7 @@
+package hibernate.services;
+
+import hibernate.models.Client;
+import org.apache.log4j.chainsaw.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,15 +11,15 @@ import java.util.concurrent.Semaphore;
 public class ServeAccounts implements Runnable {
 
     private static final Logger LOG = LoggerFactory.getLogger(Main.class);
-    private final List<Account> clients;
     private final int INTERVAL;
     private final String operationType; //payment , profit
     private final int PAYMENT = 10;
+    private List<Client> clients;
     Semaphore semaphore;
+    ClientService clientService ;
 
 
-    public ServeAccounts(List<Account> clients, Semaphore aSemaphore, int interval, String operationType) {
-        this.clients = clients;
+    public ServeAccounts(Semaphore aSemaphore, int interval, String operationType) {
         this.semaphore = aSemaphore;
         INTERVAL = interval;
         this.operationType = operationType;
@@ -25,14 +29,17 @@ public class ServeAccounts implements Runnable {
     public void run() {
         while (true) {
             try {
+                getClients();
                 Thread.sleep(INTERVAL);
                 semaphore.acquire();
-                clients.forEach(account -> {
+                clients.forEach(client -> {
                     if (this.operationType.equals("payment")) {
-                        account.takeMoney(this.PAYMENT);
+                        client.setAccount(client.getAccount() + PAYMENT);
+                        clientService.update(client);
                     } else if (operationType.equals("profit")) {
-                        int dividend = account.getDeposit() / 100;
-                        account.putMoney(dividend);
+                        int dividend = (int) (client.getAccount() / 100);
+                        client.setAccount(client.getAccount() + dividend);
+                        clientService.update(client);
                     }
                 });
                 semaphore.release();
@@ -41,5 +48,11 @@ public class ServeAccounts implements Runnable {
                 return;
             }
         }
+    }
+
+
+    public void getClients() {
+        clientService = new ClientService();
+        clients = clientService.getAllClients();
     }
 }

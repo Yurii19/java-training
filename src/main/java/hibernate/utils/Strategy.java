@@ -1,7 +1,9 @@
+package hibernate.utils;
+
 import java.util.LinkedHashMap;
 
 public abstract class Strategy {
-      abstract LinkedHashMap<Integer, Integer> giveMoney(LinkedHashMap<Integer, Integer> billsBox, int amount);
+      protected abstract void giveMoney(int amount);
 
       /**
        * @param billsBoxBefore array contains information about different ATM bills before operation
