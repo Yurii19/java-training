@@ -120,4 +120,14 @@ public class Statistic {
         }
     }
 
+    public void printStatistic(){
+        System.out.println(" 1 uah bill :putted - "+ getSlot1Add()+", picked - "+ getSlot1Sub() );
+        System.out.println(" 2 uah bill :putted - "+ getSlot2Add()+", picked - "+ getSlot2Sub() );
+        System.out.println(" 5 uah bill :putted - "+ getSlot5Add()+", picked - "+ getSlot5Sub() );
+        System.out.println(" 10 uah bill :putted - "+ getSlot10Add()+", picked - "+ getSlot10Sub() );
+        System.out.println(" 20 uah bill :putted - "+ getSlot20Add()+", picked - "+ getSlot20Sub() );
+        System.out.println(" 50 uah bill :putted - "+ getSlot50Add()+", picked - "+ getSlot50Sub() );
+        System.out.println(" 100 uah bill :putted - "+ getSlot100Add()+", picked - "+ getSlot100Sub() );
+    }
+
 }

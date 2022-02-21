@@ -60,11 +60,9 @@ public class ClientInterface {
     }
 
     public void serveStatCommands() {
-        System.out.println(" << serveStatCommands >> ");
         StatisticService statisticService = new StatisticService(Statistic.class);
-        Statistic statistic = (Statistic) statisticService.get(1);
-        statistic.updateSlots(null, OperationType.PUT);
-        System.out.println("Statistic ->>> " + statistic);
+        Statistic statistic = (Statistic) statisticService.get((int) atm.getId());
+        statistic.printStatistic();
     }
 
     public void serveCashDialog() {
@@ -105,7 +103,7 @@ public class ClientInterface {
     private void loginClient(Scanner sc) {
         while (client == null) {
             System.out.println(">> Please input your name");
-            String answer = sc.nextLine();
+            String answer = sc.nextLine().trim();
             if (answer.equals("exit")) {
                 this.client = null;
                 break;
@@ -116,7 +114,7 @@ public class ClientInterface {
                 System.err.println("User not found.");
                 continue;
             }
-            System.out.println(" >> Hello " + client.getName() + "!");
+            System.out.println(">> Hello " + client.getName() + "!");
         }
     }
 }
